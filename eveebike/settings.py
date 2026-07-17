@@ -29,8 +29,8 @@ SECRET_KEY = 'django-insecure-#^isz)u@-$bt4wqu)g2%2*c5$hw21tmj&u$!%-h4kh_@7&((ej
 DEBUG = True
 
 # ALLOWED_HOSTS = ['eveebike.pythonanywhere.com']
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [

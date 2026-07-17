@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-#^isz)u@-$bt4wqu)g2%2*c5$hw21tmj&u$!%-h4kh_@7&((ej
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['natraders.pythonanywhere.com']
+ALLOWED_HOSTS = ['eveebike.pythonanywhere.com']
 
 
 # Application definition

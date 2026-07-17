@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-{% load static %}
-  
+
   <!-- Banner Section Starts -->
   <section class="banner breadcrumb mb-0 pt-11 pb-10 position-relative rounded3 rounded-top-0">
     <div class="overlay rounded3 rounded-top-0"></div>
@@ -11,9 +11,9 @@
         <div class="section-title mb-2">
           <h1 class="text-white mb-2">Contact Us</h1>
           <ul class="list-unstyled d-flex justify-content-center">
-            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'website:home' %}">Home</a></li>
             <li class="mx-4"><i class="fa fa-star-o green" aria-hidden="true"></i></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="{% url 'website:contact' %}">Contact Us</a></li>
           </ul>
         </div>
       </div>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="contact-box-info">
                           <h5 class="mb-1">Email Address</h5>
-                          <span><a href="https://htmldesigntemplates.com/cdn-cgi/l/email-protection#e58c8b838aa5928087968c9180cb868a88" class="grey"><span class="__cf_email__" data-cfemail="dcb5b2bab39cb4bdacaca5acbda5f2bfb3b1">[email&#160;protected]</span></a></span>
+                          <span><a href="mailto:info@eveebike.com" class="grey">info@eveebike.com</a></span>
                         </div>
                       </div>
                     </div>
@@ -83,15 +83,16 @@
                 <p>Our team is ready to answer all your questions.</p>
               </div>
               <div class="contact-form p-6 border border-2 border-lightgreen rounded2 bg-white">
-                <form>
-                  <input type="text" name="name" id="name" class="bg-lightgreen mb-4 mx-1" placeholder="Your Name...">
-                  <input type="email" name="email" id="email" class="bg-lightgreen mb-4 mx-1" placeholder="Your Email...">
+                <form method="post" action="{% url 'website:contact' %}">
+                  {% csrf_token %}
+                  <input type="text" name="name" id="name" class="bg-lightgreen mb-4 mx-1" placeholder="Your Name..." required>
+                  <input type="email" name="email" id="email" class="bg-lightgreen mb-4 mx-1" placeholder="Your Email..." required>
                   <span class="d-md-flex">
-                    <input type="number" name="phone" id="phone" class="bg-lightgreen mb-4 mx-1" placeholder="Phone No...">
+                    <input type="tel" name="phone" id="phone" class="bg-lightgreen mb-4 mx-1" placeholder="Phone No...">
                     <input type="text" name="subject" id="subject" class="bg-lightgreen mb-4 mx-1" placeholder="Your Subject...">
                   </span>
-                  <textarea name="message" id="message" placeholder="Enter your Message..." rows="4" class="bg-lightgreen mb-4"></textarea>
-                  <button class="bnt btn2 border-0">Send Message</button>
+                  <textarea name="message" id="message" placeholder="Enter your Message..." rows="4" class="bg-lightgreen mb-4" required></textarea>
+                  <button type="submit" class="btn btn2 border-0">Send Message</button>
                 </form>
               </div>
             </div>
@@ -108,7 +109,9 @@
       <div class="branch-inner text-center">
         <div class="contact-map mb-6">
           <iframe class="rounded2 w-100" height="400"
-                      src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=+(mangal%20bazar)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                      src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=+(mangal%20bazar)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                      title="Google Maps Location"></iframe>
         </div>
         <div class="branch-list">
           <div class="row gy-5 gx-md-5">
@@ -153,7 +156,7 @@
   <!-- Branch Contact Ends -->
 
   <!-- Newsletter Section Starts -->
-   <section class="newsletter text-white z-1 position-relative">
+  <section class="newsletter text-white z-1 position-relative">
     <div class="container">
       <div class="newsletter-inner p-6 bg-green1 rounded2 text-center text-md-start">
         <div class="row gx-xl-5 gy-4 align-items-center">
@@ -165,15 +168,17 @@
           </div>
           <div class="col-xl-7">
             <div class="section-body">
-              <p class="mb-3">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporatu incididunt ut labore et dolore magna aliqua.”</p>
+              <p class="mb-3">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporatu incididunt ut labore et dolore magna aliqua."</p>
               <div class="search-bar d-md-flex">
-                <input type="text" placeholder="Search..." class="w-100 mx-1"><a href="#" class="btn btn3 mx-1">subscribe</a>
+                <input type="text" placeholder="Search..." class="w-100 mx-1">
+                <a href="#" class="btn btn3 mx-1">Subscribe</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-   </section>
-  <!-- Newsletter Section Starts -->
+  </section>
+  <!-- Newsletter Section Ends -->
+
 {% endblock %}

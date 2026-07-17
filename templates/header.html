@@ -3,8 +3,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zxx">
 
-
-<!-- Mirrored from htmldesigntemplates.com/html/evdrivex/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 08 May 2026 05:59:15 GMT -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +10,7 @@
   <title>EV Bikes</title>
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/Na.jpeg' %}">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo1.jpeg' %}">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -34,9 +32,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
-
-
-
 </head>
 <body class="index-2">
    <!-- Header Section Starts -->
@@ -47,20 +42,32 @@
           <div class="row align-items-center justify-content-between">
             <div class="d-block d-xl-none col-lg-2 col-md-3 col-5">
               <div class="navbar-logo m-0">
-                <a href="index.html"><img src="{% static 'images/Na.jpeg' %}" alt="Logo" class="w-100"></a>
+                <a href="{% url 'website:home' %}">
+                  <img src="{% static 'images/logo1.jpeg' %}" alt="Logo" class="w-100">
+                </a>
               </div>
             </div>
             <div class="col-lg-12">
               <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="navbar-nav align-items-center justify-content-between flex-row" id="responsive-menu">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link  px-3 white text-uppercase fw-medium active" href="#" role="button"
-                      data-bs-toggle="dropdown" aria-expanded="false">
+
+                  <!-- Home -->
+                  <li class="nav-item">
+                    <a class="nav-link px-3 py-0 white text-uppercase fw-medium {% if request.path == '/' %}active{% endif %}"
+                       href="{% url 'website:home' %}">
                       Home
                     </a>
-                  <li class="nav-item">
-                    <a class="nav-link px-3 py-0 white text-uppercase fw-medium" href="about">About</a>
                   </li>
+
+                  <!-- About -->
+                  <li class="nav-item">
+                    <a class="nav-link px-3 py-0 white text-uppercase fw-medium {% if 'about' in request.path %}active{% endif %}"
+                       href="{% url 'website:about' %}">
+                      About
+                    </a>
+                  </li>
+
+                  <!-- Services Dropdown -->
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3 white text-uppercase fw-medium" href="#" role="button"
                       data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,11 +75,13 @@
                     </a>
                     <ul class="dropdown-menu bg-grey p-0 border-0 rounded1 bg-off-white">
                       <li><a class="dropdown-item py-2 px-7 text-capitalize border-0 dark-grey"
-                          href="service-list.html">Service List</a></li>
+                          href="{% url 'website:productslist' %}">Service List</a></li>
                       <li class="border-0"><a class="dropdown-item py-2 px-7 text-capitalize border-0 dark-grey"
-                          href="service-detail.html">Service Details</a></li>
+                          href="{% url 'website:productdetail' 1 %}">Service Details</a></li>
                     </ul>
                   </li>
+
+                  <!-- Projects Dropdown -->
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3 white text-uppercase fw-medium" href="#" role="button"
                       data-bs-toggle="dropdown" aria-expanded="false">
@@ -80,14 +89,20 @@
                     </a>
                     <ul class="dropdown-menu bg-grey p-0 rounded1 bg-off-white border-0">
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                          href="productlist.html">Project List</a></li>
+                          href="{% url 'website:productslist' %}">Project List</a></li>
                       <li class="border-0"><a class="dropdown-item py-2 px-7 text-capitalize border-0 dark-grey"
-                          href="productdetail.html">Project Detail</a></li>
+                          href="{% url 'website:productdetail' 1 %}">Project Detail</a></li>
                     </ul>
                   </li>
-                  <li class=" mx-2 text-center d-none d-xl-block">
-                    <a class="px-3 py-0 text-uppercase fw-medium active text-center" aria-current="page" href="index.html"><img src="{% static 'images/ev-logo-04.png' %}" alt="Logo" class="w-50"></a>
+
+                  <!-- Logo in Center -->
+                  <li class="mx-2 d-none d-xl-block">
+                    <a class="d-block" href="{% url 'website:home' %}" style="padding: 5px 15px;">
+                      <img src="{% static 'images/wh.png' %}" alt="Logo" style="height: 50px; width: auto; display: flex">
+                    </a>
                   </li>
+
+                  <!-- Pages Dropdown -->
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3 white text-uppercase fw-medium" href="#" role="button"
                       data-bs-toggle="dropdown" aria-expanded="false">
@@ -95,15 +110,17 @@
                     </a>
                     <ul class="dropdown-menu bg-grey p-0 rounded1 bg-off-white border-0">
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                          href="testimonial.html">Testimonials</a></li>
+                          href="{% url 'website:home' %}#testimonials">Testimonials</a></li>
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                          href="faq.html">Faq</a></li>
+                          href="{% url 'website:home' %}#faq">Faq</a></li>
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                          href="productslist">Product List</a></li>
+                          href="{% url 'website:productslist' %}">Product List</a></li>
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                          href="productdetail">Product Single</a></li>
+                          href="{% url 'website:productdetail' 1 %}">Product Single</a></li>
                     </ul>
                   </li>
+
+                  <!-- Shop Dropdown -->
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3 white text-uppercase fw-medium" href="#" role="button"
                       data-bs-toggle="dropdown" aria-expanded="false">
@@ -111,15 +128,17 @@
                     </a>
                     <ul class="dropdown-menu bg-grey p-0 rounded1 bg-off-white border-0">
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                          href="productslist">Product List</a></li>
+                          href="{% url 'website:productslist' %}">Product List</a></li>
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                        href="productdetail">Product Detail</a></li>
+                          href="{% url 'website:productdetail' 1 %}">Product Detail</a></li>
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                        href="cart">Cart</a></li>
+                          href="{% url 'website:cart' %}">Cart</a></li>
                       <li class="border-0"><a class="dropdown-item py-2 px-7 text-capitalize border-0 dark-grey"
-                          href="checkout">Checkout</a></li>
+                          href="{% url 'website:checkout' %}">Checkout</a></li>
                     </ul>
                   </li>
+
+                  <!-- Blogs Dropdown -->
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3 white text-uppercase fw-medium" href="#" role="button"
                       data-bs-toggle="dropdown" aria-expanded="false">
@@ -127,14 +146,20 @@
                     </a>
                     <ul class="dropdown-menu bg-grey p-0 rounded1 bg-off-white border-0">
                       <li><a class="dropdown-item py-2 px-7 text-capitalize dark-grey border-0"
-                          href="blog-list.html">Blog List</a></li>
+                          href="{% url 'website:home' %}#blog">Blog List</a></li>
                       <li class="border-0"><a class="dropdown-item py-2 px-7 text-capitalize border-0 dark-grey"
-                          href="blog-detail.html">Blog single</a></li>
+                          href="{% url 'website:home' %}#blog-detail">Blog single</a></li>
                     </ul>
                   </li>
+
+                  <!-- Contact -->
                   <li class="nav-item">
-                    <a class="nav-link px-3 py-0 white text-uppercase fw-medium" href="contact">Contact</a>
+                    <a class="nav-link px-3 py-0 white text-uppercase fw-medium {% if 'contact' in request.path %}active{% endif %}"
+                       href="{% url 'website:contact' %}">
+                      Contact
+                    </a>
                   </li>
+
                 </ul>
               </div>
             </div>

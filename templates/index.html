@@ -115,7 +115,7 @@
           </div>
           <div class="col-lg-4">
             <div class="section-title-right text-center position-relative">
-              <a href="service-list.html">
+              <a href="{% url 'website:productslist' %}">
                 <div class="spin-demo-main position-relative">
                   <img src="{% static 'images/top-right.png' %}" alt="">
                   <svg id="rotatingText" viewBox="0 0 200 200" width="150" height="150">
@@ -192,11 +192,11 @@
           <div class="col-lg-3 col-md-6">
             <div class="product-card">
               <div class="product-img position-relative">
-                <a href="{% url 'productdetail' product.id %}" class="product-img-link">
+                <a href="{% url 'website:productdetail' product.id %}" class="product-img-link">
                   <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
                 </a>
                 <div class="card-overlay">
-                  <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form w-100">
+                  <form method="post" action="{% url 'website:add_to_cart' product.id %}" class="add-to-cart-form w-100">
                     {% csrf_token %}
                     <input type="hidden" name="quantity" value="1">
                     <input type="hidden" name="next" value="{{ request.path }}">
@@ -207,11 +207,11 @@
                 </div>
               </div>
               <h4 class="product-title mt-3">
-                <a href="{% url 'productdetail' product.id %}" class="text-decoration-none text-dark">
+                <a href="{% url 'website:productdetail' product.id %}" class="text-decoration-none text-dark">
                   {{ product.name }}
                 </a>
               </h4>
-              <div class="product-price">${{ product.price }}</div>
+              <div class="product-price">RS {{ product.price }}</div>
             </div>
           </div>
           {% empty %}
@@ -227,11 +227,11 @@
           <div class="col-lg-4 col-md-6">
             <div class="product-card">
               <div class="product-img position-relative">
-                <a href="{% url 'productdetail' product.id %}" class="product-img-link">
-                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
+                <a href="{% url 'website:productdetail' product.id %}" class="product-img-link">
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-300 rounded2">
                 </a>
                 <div class="card-overlay">
-                  <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form w-100">
+                  <form method="post" action="{% url 'website:add_to_cart' product.id %}" class="add-to-cart-form w-100">
                     {% csrf_token %}
                     <input type="hidden" name="quantity" value="1">
                     <input type="hidden" name="next" value="{{ request.path }}">
@@ -242,11 +242,11 @@
                 </div>
               </div>
               <h4 class="product-title mt-3">
-                <a href="{% url 'productdetail' product.id %}" class="text-decoration-none text-dark">
+                <a href="{% url 'website:productdetail' product.id %}" class="text-decoration-none text-dark">
                   {{ product.name }}
                 </a>
               </h4>
-              <div class="product-price">${{ product.price }}</div>
+              <div class="product-price">RS {{ product.price }}</div>
             </div>
           </div>
           {% empty %}
@@ -262,11 +262,11 @@
           <div class="col-lg-3 col-md-6">
             <div class="product-card">
               <div class="product-img position-relative">
-                <a href="{% url 'productdetail' product.id %}" class="product-img-link">
-                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
+                <a href="{% url 'website:productdetail' product.id %}" class="product-img-link">
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-300 rounded2">
                 </a>
                 <div class="card-overlay">
-                  <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form w-100">
+                  <form method="post" action="{% url 'website:add_to_cart' product.id %}" class="add-to-cart-form w-100">
                     {% csrf_token %}
                     <input type="hidden" name="quantity" value="1">
                     <input type="hidden" name="next" value="{{ request.path }}">
@@ -277,11 +277,11 @@
                 </div>
               </div>
               <h4 class="product-title mt-3">
-                <a href="{% url 'productdetail' product.id %}" class="text-decoration-none text-dark">
+                <a href="{% url 'website:productdetail' product.id %}" class="text-decoration-none text-dark">
                   {{ product.name }}
                 </a>
               </h4>
-              <div class="product-price">${{ product.price }}</div>
+              <div class="product-price">RS {{ product.price }}</div>
             </div>
           </div>
           {% empty %}
@@ -400,7 +400,7 @@
             <div class="col-lg-5">
               <div class="section-title-right">
                 <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi dolor architecto molestias aritatis minima accusamus.</p>
-                <a href="service-list.html" class="btn btn2">More Servicess</a>
+                <a href="{% url 'website:productslist' %}" class="btn btn2">More Services</a>
               </div>
             </div>
           </div>
@@ -441,7 +441,7 @@
               <div class="section-body text-white position-relative">
                 <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <a href="about.html" class="btn btn2 mb-7">Discover More</a>
+                <a href="{% url 'website:about' %}" class="btn btn2 mb-7">Discover More</a>
                 <div class="about-counter text-center text-xl-start">
                   <div class="row">
                     <div class="col-md-6">
@@ -613,7 +613,7 @@
             <div class="col-lg-5">
               <div class="blog-title-right">
                 <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi dolor archite ea veritatis minima accusamus.</p>
-                <a href="blog-list.html" class="btn btn2">All Blogs</a>
+                <a href="{% url 'website:home' %}#blog" class="btn btn2">All Blogs</a>
               </div>
             </div>
           </div>
@@ -629,13 +629,13 @@
                     <div class="col-md-5 order-2 order-md-1">
                       <div class="blog-info">
                         <div class="blog-tag px-2 py-1 rounded2 bg-lightgreen black small d-inline-block mb-2"><span class="fw-medium">{{ post.category }}</span></div>
-                        <h4 class="mb-4"><a href="blog-detail.html" class="black">{{ post.title }}</a></h4>
+                        <h4 class="mb-4"><a href="{% url 'website:home' %}#blog-detail" class="black">{{ post.title }}</a></h4>
                         <p class="mb-2">{{ post.excerpt }}</p>
                         <div class="blog-data pt-2 border-top border-1 border-grey2"><span class="small">{{ post.published_date|date:"F d, Y" }} <span class="mx-2">|</span> 0 Comments</span></div>
                       </div>
                     </div>
                     <div class="col-md-7 order-1 order-md-2">
-                      <div class="blog-image position-relative"><a href="blog-detail.html"><img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-100 rounded1"></a></div>
+                      <div class="blog-image position-relative"><a href="{% url 'website:home' %}#blog-detail"><img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-100 rounded1"></a></div>
                     </div>
                   </div>
                 </div>
@@ -649,9 +649,9 @@
             <div class="blog-body-right h-100 p-6 py-4 rounded2 border border-2 border-lightgreen bg-white">
               {% with blog_posts|first as latest %}
               <div class="blog-box">
-                <div class="blog-image mb-4 position-relative"><a href="blog-detail.html"><img src="{{ latest.image.url }}" alt="{{ latest.title }}" class="w-100 rounded1"></a></div>
+                <div class="blog-image mb-4 position-relative"><a href="{% url 'website:home' %}#blog-detail"><img src="{{ latest.image.url }}" alt="{{ latest.title }}" class="w-100 rounded1"></a></div>
                 <div class="blog-info">
-                  <h5 class="mb-3"><a href="blog-detail.html" class="black">{{ latest.title }}</a></h5>
+                  <h5 class="mb-3"><a href="{% url 'website:home' %}#blog-detail" class="black">{{ latest.title }}</a></h5>
                   <ul class="list-unstyled d-flex align-items-center justify-content-between">
                     <li class="blog-tag px-2 py-1 rounded2 bg-lightgreen black small"><span class="fw-medium">{{ latest.category }}</span></li>
                     <li class="small">{{ latest.published_date|date:"F d, Y" }}</li>
@@ -668,47 +668,48 @@
 </section>
 
 <!-- Contact & App Section -->
-  <section class="contact-mobile pb-10">
-    <div class="container">
-      <div class="contact-mobile-inner">
-        <div class="row gy-5 align-items-center">
-          <div class="col-lg-6">
-            <div class="mobile-app1">
-              <div class="mobile-app1-title mb-6 text-center">
-                <h6 class="text-uppercase fw-medium green1 mb-1">Download evcharge app</h6>
-                <h2>Discover Nearby <span class="green">charging station</span> with our app</h2>
+<section class="contact-mobile pb-10">
+  <div class="container">
+    <div class="contact-mobile-inner">
+      <div class="row gy-5 align-items-center">
+        <div class="col-lg-6">
+          <div class="mobile-app1">
+            <div class="mobile-app1-title mb-6 text-center">
+              <h6 class="text-uppercase fw-medium green1 mb-1">Download evcharge app</h6>
+              <h2>Discover Nearby <span class="green">charging station</span> with our app</h2>
+            </div>
+            <div class="mobile-app1-body">
+              <div class="mobile-app-image text-center ">
+                <img src="{% static 'images/mockup-ev.png' %}" alt="app image" class="w-50 m-auto">
               </div>
-              <div class="mobile-app1-body">
-                <div class="mobile-app-image text-center ">
-                  <img src="{% static 'images/mockup-ev.png' %}" alt="app image" class="w-50 m-auto">
-                </div>
-                <ul class="list-unstyled text-center download-btn d-md-flex justify-content-center">
-                  <li class="mx-1 my-2"><a href="#" class="btn btn2"><i class="fa fa-apple me-2" aria-hidden="true"></i> App store</a></li>
-                  <li class="mx-1 my-2 h6"><a href="#" class="btn border border-1 border-green"><i class="fa fa-play me-2" aria-hidden="true"></i> Play Store</a></li>
-                </ul>
-              </div>
+              <ul class="list-unstyled text-center download-btn d-md-flex justify-content-center">
+                <li class="mx-1 my-2"><a href="#" class="btn btn2"><i class="fa fa-apple me-2" aria-hidden="true"></i> App store</a></li>
+                <li class="mx-1 my-2 h6"><a href="#" class="btn border border-1 border-green"><i class="fa fa-play me-2" aria-hidden="true"></i> Play Store</a></li>
+              </ul>
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="contact-form p-6 bg-white rounded2 border border-2 border-lightgreen">
-              <div class="form-title mb-6 text-center">
-                <h3 class="mb-2">Any questions? Ask us!!</h3>
-                <p>Magna voluptatum dolorem! Dolores! Sociosqu commodo nobis imperdiet lacinia</p>
-              </div>
-              <div class="career-form-inner">
-                <form>
-                  <input type="text" name="name" id="name" placeholder="Your Name*" class="bg-lightgreen mb-4">
-                  <input type="email" name="email" id="email" placeholder="Your Email*" class="bg-lightgreen mb-4">
-                  <input type="number" name="number" id="number" placeholder="Mobile Number" class="bg-lightgreen mb-4">
-                  <textarea class="bg-lightgreen mb-4" rows="4" placeholder="Enter your message*"></textarea>
-                  <button class="btn btn2">Submit Message</button>
-                </form>
-              </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="contact-form p-6 bg-white rounded2 border border-2 border-lightgreen">
+            <div class="form-title mb-6 text-center">
+              <h3 class="mb-2">Any questions? Ask us!!</h3>
+              <p>Magna voluptatum dolorem! Dolores! Sociosqu commodo nobis imperdiet lacinia</p>
+            </div>
+            <div class="career-form-inner">
+              <form method="post" action="{% url 'website:contact' %}">
+                {% csrf_token %}
+                <input type="text" name="name" id="name" placeholder="Your Name*" class="bg-lightgreen mb-4">
+                <input type="email" name="email" id="email" placeholder="Your Email*" class="bg-lightgreen mb-4">
+                <input type="number" name="number" id="number" placeholder="Mobile Number" class="bg-lightgreen mb-4">
+                <textarea class="bg-lightgreen mb-4" name="message" rows="4" placeholder="Enter your message*"></textarea>
+                <button type="submit" class="btn btn2">Submit Message</button>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 {% endblock %}

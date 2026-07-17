@@ -10,8 +10,8 @@
       <div class="section-title mb-2">
         <h1 class="text-white mb-2">{{ product.name }}</h1>
         <div class="product-breadcrumb small mb-4">
-          <a href="{% url 'home' %}" class="text-white-50">Home</a> <span class="text-white-50">/</span>
-          <a href="{% url 'productslist' %}" class="text-white-50">Product List</a> <span class="text-white-50">/</span>
+          <a href="{% url 'website:home' %}" class="text-white-50">Home</a> <span class="text-white-50">/</span>
+          <a href="{% url 'website:productslist' %}" class="text-white-50">Product List</a> <span class="text-white-50">/</span>
           <span class="text-white">{{ product.name }}</span>
         </div>
       </div>
@@ -64,16 +64,21 @@
                 <span class="green fw-bold h4">Rs: {{ product.price }}</span>
               </div>
 
-              <!-- Add to Cart Form -->
-              <div class="add-to-cart border-dashed border-top-0 border-start-0 border-end-0 border-2 mb-4 pb-4">
-                <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form d-inline">
-                  {% csrf_token %}
-                  <input type="number" name="quantity" id="quantity" class="border-grey1 w-md-10 w-20 pe-2 me-3" min="1" value="1">
-                  <button type="submit" class="btn btn2 add-to-cart-btn">
-                    <i class="fa fa-shopping-cart me-2"></i> Add to Cart
-                  </button>
-                </form>
-              </div>
+            <!-- Add to Cart Section - Simplified -->
+<div class="add-to-cart-section mt-4 p-3">
+    <form method="post" action="{% url 'website:add_to_cart' product.id %}" class="d-flex align-items-center gap-3">
+        {% csrf_token %}
+        <div class="d-flex align-items-center">
+            <label for="quantity" class="fw-bold me-2">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" min="1" value="1"
+                   style="width: 70px; padding: 8px 10px; border: 1px solid #ced4da; border-radius: 13px;">
+        </div>
+        <button type="submit" class="btn btn-success px-4 py-2 fw-bold"
+                style="background: #28a745; color: white; border: none; border-radius: 13px;">
+            <i class="fa fa-shopping-cart me-2"></i> Add to Cart
+        </button>
+    </form>
+</div>
 
               {# Colors swatches - show below add-to-cart and allow selection #}
               {% if product.color_list %}
@@ -313,9 +318,9 @@
               <div class="social-links team-socials mt-4">
                 <ul class="list-unstyled d-flex justify-content-center justify-content-lg-start align-items-center">
                   <li class="me-2">Follow:</li>
-                  <li class="me-1"><a href="#" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-facebook-square"></i></a></li>
-                  <li class="me-1"><a href="#" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="#" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-youtube-play"></i></a></li>
+                  <li class="me-1"><a href="https://facebook.com" target="_blank" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-facebook-square"></i></a></li>
+                  <li class="me-1"><a href="https://twitter.com" target="_blank" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="https://youtube.com" target="_blank" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-youtube-play"></i></a></li>
                 </ul>
               </div>
             </div>
@@ -433,11 +438,11 @@
           <div class="col-lg-3 col-md-6">
             <div class="product-box p-4 rounded2 border border-2 border-lightgreen">
               <div class="product-image mb-5 position-relative bottom-0">
-                <a href="{% url 'productdetail' related.id %}">
+                <a href="{% url 'website:productdetail' related.id %}">
                   <img src="{{ related.image.url }}" alt="{{ related.name }}" class="w-100 rounded2">
                 </a>
                 <div class="add-to-cart-btn position-absolute" style="bottom: 10px; left: 50%; transform: translateX(-50%);">
-                  <form method="post" action="{% url 'add_to_cart' related.id %}" class="d-inline">
+                  <form method="post" action="{% url 'website:add_to_cart' related.id %}" class="d-inline">
                     {% csrf_token %}
                     <input type="hidden" name="quantity" value="1">
                     <button type="submit" class="btn btn2 btn-sm">
@@ -448,7 +453,7 @@
               </div>
               <div class="product-info">
                 <h5 class="mb-2">
-                  <a href="{% url 'productdetail' related.id %}" class="black">{{ related.name }}</a>
+                  <a href="{% url 'website:productdetail' related.id %}" class="black">{{ related.name }}</a>
                 </h5>
                 <span class="h6 fw-bold green">Rs: {{ related.price }}</span>
               </div>

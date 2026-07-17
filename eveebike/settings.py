@@ -28,8 +28,8 @@ SECRET_KEY = 'django-insecure-#^isz)u@-$bt4wqu)g2%2*c5$hw21tmj&u$!%-h4kh_@7&((ej
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['eveebike.pythonanywhere.com']
-
+# ALLOWED_HOSTS = ['eveebike.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website',
+    'cart',
+
 ]
 
 MIDDLEWARE = [
@@ -127,4 +129,16 @@ STATICFILES_DIRS = [
     BASE_DIR,"static"
 ]
 
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'riazusman476@gmail.com'  # or your email provider
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'riazusman476@gmail.com'
+EMAIL_HOST_PASSWORD = 'USman2213@!'
+DEFAULT_FROM_EMAIL = 'riazusman476@gmail.com'
+ADMIN_EMAIL = 'admin@yourdomain.com'
 
+# Site settings
+SITE_NAME = 'EveeBike'
+SITE_URL = 'https://eveebike.com'

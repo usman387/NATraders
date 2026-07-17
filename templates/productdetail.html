@@ -1,0 +1,779 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Banner Section Starts -->
+<section class="banner breadcrumb mb-0 pt-11 pb-10 position-relative rounded3 rounded-top-0">
+  <div class="overlay rounded3 rounded-top-0"></div>
+  <div class="container position-relative">
+    <div class="banner-inner pt-10 w-lg-75 m-auto text-center text-white">
+      <div class="section-title mb-2">
+        <h1 class="text-white mb-2">{{ product.name }}</h1>
+        <div class="product-breadcrumb small mb-4">
+          <a href="{% url 'home' %}" class="text-white-50">Home</a> <span class="text-white-50">/</span>
+          <a href="{% url 'productslist' %}" class="text-white-50">Product List</a> <span class="text-white-50">/</span>
+          <span class="text-white">{{ product.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Banner Section Ends -->
+
+<!-- Product Detail Section Starts -->
+<section class="product-detail py-10">
+  <div class="container">
+    <div class="product-detail-inner">
+      <div class="section-top mb-8">
+        <div class="row gx-lg-5 gy-5 align-items-start">
+          <div class="col-lg-5">
+            <div class="product-image">
+              {% with product.images.all as images %}
+                {% if images %}
+                  <!-- Main image display -->
+                  <div class="main-image mb-3">
+                    <img id="mainProductImage" src="{{ images.0.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
+                  </div>
+                  <!-- Thumbnail row -->
+                  <div class="thumbnail-row d-flex flex-wrap gap-2">
+                    {% for img in images %}
+                      <div class="thumbnail" style="width: 200px; cursor: pointer;">
+                        <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}" class="img-fluid rounded border" onclick="document.getElementById('mainProductImage').src='{{ img.image.url }}'">
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <!-- Fallback if no images uploaded -->
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
+                {% endif %}
+              {% endwith %}
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="product-description text-center text-lg-start">
+              <div class="product-description-inner mb-4">
+                <h3 class="mb-2">{{ product.name }}</h3>
+
+                <!-- Short Description with HTML rendering -->
+                {% if product.short_description %}
+                  <div class="product-short-desc mb-3">
+                    {{ product.short_description|safe }}
+                  </div>
+                {% endif %}
+
+                <span class="green fw-bold h4">Rs: {{ product.price }}</span>
+              </div>
+
+              <!-- Add to Cart Form -->
+              <div class="add-to-cart border-dashed border-top-0 border-start-0 border-end-0 border-2 mb-4 pb-4">
+                <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form d-inline">
+                  {% csrf_token %}
+                  <input type="number" name="quantity" id="quantity" class="border-grey1 w-md-10 w-20 pe-2 me-3" min="1" value="1">
+                  <button type="submit" class="btn btn2 add-to-cart-btn">
+                    <i class="fa fa-shopping-cart me-2"></i> Add to Cart
+                  </button>
+                </form>
+              </div>
+
+              {# Colors swatches - show below add-to-cart and allow selection #}
+              {% if product.color_list %}
+                <div class="product-colors mb-4" data-product-id="{{ product.id }}">
+                  <h6 class="mb-2">Choose color</h6>
+                  <div class="d-flex flex-wrap align-items-center gap-2">
+                    <input type="hidden" id="selectedColor" name="color" value="">
+                    {% for color in product.color_list %}
+                      <button type="button" class="color-swatch btn p-0 border" data-color="{{ color }}" title="{{ color }}" style="display:inline-flex;align-items:center;gap:8px;padding:6px;border-radius:6px;">
+                        <span class="swatch-circle rounded-circle" style="display:inline-block;width:22px;height:22px;background-color:{{ color|default:'#ddd' }};border:1px solid #ccc;"></span>
+                        <small class="text-muted d-none d-md-inline">{{ color }}</small>
+                      </button>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+
+              <div class="product-info border-dashed border-top-0 border-start-0 border-end-0 border-2 mb-4 pb-4">
+                <h4 class="mb-2">Product Info</h4>
+                <ul class="list-unstyled mb-3">
+                  <li class="mb-1">
+                    <span class="fw-medium black me-2">Category:</span>
+                    {{ product.category|default:"Uncategorized" }}
+                  </li>
+                  <li>
+                    <span class="fw-medium black me-2">SKU:</span>
+                    EV{{ product.id|stringformat:"03d" }}
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Specifications Section - Clean Table Style -->
+              <div class="product-specifications mt-4">
+                <h4 class="mb-3">Specifications</h4>
+
+                <!-- Motor Specifications -->
+                {% if product.motor_type or product.rated_power or product.max_torque or product.max_speed or product.controller or product.motor_warranty %}
+                <div class="spec-section mb-3">
+                  <h5 class="spec-title green fw-bold mb-2">Motor</h5>
+                  <table class="spec-table">
+                    <tbody>
+                      {% if product.motor_type %}
+                      <tr>
+                        <td class="spec-label">Motor Type</td>
+                        <td class="spec-value">{{ product.motor_type }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.rated_power %}
+                      <tr>
+                        <td class="spec-label">Rated Power</td>
+                        <td class="spec-value">{{ product.rated_power }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.max_torque %}
+                      <tr>
+                        <td class="spec-label">Max Torque</td>
+                        <td class="spec-value">{{ product.max_torque }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.max_speed %}
+                      <tr>
+                        <td class="spec-label">Max Speed</td>
+                        <td class="spec-value">{{ product.max_speed }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.controller %}
+                      <tr>
+                        <td class="spec-label">Controller</td>
+                        <td class="spec-value">{{ product.controller }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.motor_warranty %}
+                      <tr>
+                        <td class="spec-label">Motor Warranty</td>
+                        <td class="spec-value">{{ product.motor_warranty }}</td>
+                      </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+                {% endif %}
+
+                <!-- Body Dimensions -->
+                {% if product.length or product.width or product.height or product.seat_height or product.seat_length or product.colors or product.ground_clearance %}
+                <div class="spec-section mb-3">
+                  <h5 class="spec-title green fw-bold mb-2">Body Dimension</h5>
+                  <table class="spec-table">
+                    <tbody>
+                      {% if product.length %}
+                      <tr>
+                        <td class="spec-label">Length</td>
+                        <td class="spec-value">{{ product.length }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.width %}
+                      <tr>
+                        <td class="spec-label">Width</td>
+                        <td class="spec-value">{{ product.width }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.height %}
+                      <tr>
+                        <td class="spec-label">Height</td>
+                        <td class="spec-value">{{ product.height }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.seat_height %}
+                      <tr>
+                        <td class="spec-label">Seat Height</td>
+                        <td class="spec-value">{{ product.seat_height }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.seat_length %}
+                      <tr>
+                        <td class="spec-label">Seat Length</td>
+                        <td class="spec-value">{{ product.seat_length }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.ground_clearance %}
+                      <tr>
+                        <td class="spec-label">Ground Clearance</td>
+                        <td class="spec-value">{{ product.ground_clearance }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.colors %}
+                      <tr>
+                        <td class="spec-label">Colors</td>
+                        <td class="spec-value">{{ product.colors }}</td>
+                      </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+                {% endif %}
+
+                <!-- Electricals -->
+                {% if product.battery_type or product.battery_capacity or product.battery_voltage or product.battery_warranty or product.meter or product.charger or product.discharge_time or product.electrical_cost %}
+                <div class="spec-section mb-3">
+                  <h5 class="spec-title green fw-bold mb-2">Electricals</h5>
+                  <table class="spec-table">
+                    <tbody>
+                      {% if product.battery_type %}
+                      <tr>
+                        <td class="spec-label">Battery Type</td>
+                        <td class="spec-value">{{ product.battery_type }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.battery_capacity %}
+                      <tr>
+                        <td class="spec-label">Battery Capacity</td>
+                        <td class="spec-value">{{ product.battery_capacity }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.battery_voltage %}
+                      <tr>
+                        <td class="spec-label">Battery Voltage</td>
+                        <td class="spec-value">{{ product.battery_voltage }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.battery_warranty %}
+                      <tr>
+                        <td class="spec-label">Battery Warranty</td>
+                        <td class="spec-value">{{ product.battery_warranty }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.meter %}
+                      <tr>
+                        <td class="spec-label">Meter</td>
+                        <td class="spec-value">{{ product.meter }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.charger %}
+                      <tr>
+                        <td class="spec-label">Charger</td>
+                        <td class="spec-value">{{ product.charger }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.discharge_time %}
+                      <tr>
+                        <td class="spec-label">Discharge Time</td>
+                        <td class="spec-value">{{ product.discharge_time }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.electrical_cost %}
+                      <tr>
+                        <td class="spec-label">Cost</td>
+                        <td class="spec-value">Rs{{ product.electrical_cost }}</td>
+                      </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+                {% endif %}
+
+                <!-- Tyres & Brakes -->
+                {% if product.wheel or product.tire_size or product.tire_type or product.shock_front_rear or product.brake_front_rear %}
+                <div class="spec-section mb-3">
+                  <h5 class="spec-title green fw-bold mb-2">Tyres & Brakes</h5>
+                  <table class="spec-table">
+                    <tbody>
+                      {% if product.wheel %}
+                      <tr>
+                        <td class="spec-label">Wheel</td>
+                        <td class="spec-value">{{ product.wheel }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.tire_size %}
+                      <tr>
+                        <td class="spec-label">Tire Size</td>
+                        <td class="spec-value">{{ product.tire_size }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.tire_type %}
+                      <tr>
+                        <td class="spec-label">Tire Type</td>
+                        <td class="spec-value">{{ product.tire_type }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.shock_front_rear %}
+                      <tr>
+                        <td class="spec-label">Shock (Front/Rear)</td>
+                        <td class="spec-value">{{ product.shock_front_rear }}</td>
+                      </tr>
+                      {% endif %}
+                      {% if product.brake_front_rear %}
+                      <tr>
+                        <td class="spec-label">Brake (Front/Rear)</td>
+                        <td class="spec-value">{{ product.brake_front_rear }}</td>
+                      </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+                {% endif %}
+              </div>
+
+              <div class="social-links team-socials mt-4">
+                <ul class="list-unstyled d-flex justify-content-center justify-content-lg-start align-items-center">
+                  <li class="me-2">Follow:</li>
+                  <li class="me-1"><a href="#" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-facebook-square"></i></a></li>
+                  <li class="me-1"><a href="#" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="#" class="text-center bg-lightgreen d-block rounded-circle green"><i class="fa fa-youtube-play"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-bottom">
+        <div class="product-tabs">
+          <ul class="nav nav-tabs border-0 ms-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link fw-semibold active rounded-bottom-0 py-3 px-4 grey bg-lightgreen"
+                      id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                      type="button" role="tab" aria-selected="true">Description</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link fw-semibold rounded-bottom-0 py-3 px-4 grey bg-lightgreen"
+                      id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+                      type="button" role="tab" aria-selected="false">Reviews (0)</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link fw-semibold rounded-bottom-0 py-3 px-4 grey bg-lightgreen"
+                      id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane"
+                      type="button" role="tab" aria-selected="false">FAQ</button>
+            </li>
+          </ul>
+          <div class="tab-content border-top border-1 border-grey1 rounded2 p-4 pb-0" id="myTabContent">
+            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" tabindex="0">
+              <h6 class="mb-4">Description</h6>
+              {% if product.description %}
+                <div class="product-tab-description">
+                  {{ product.description|safe }}
+                </div>
+              {% else %}
+                <p>No description provided.</p>
+              {% endif %}
+            </div>
+            <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" tabindex="0">
+              <h6 class="mb-2">Reviews</h6>
+              <p>There are no reviews yet. Be the first to review!</p>
+              <!-- Review form -->
+              <div class="review-form">
+                <form>
+                  <div class="star-rating mb-3">
+                    <span class="mb-1">Your rating *</span><br>
+                    <div class="star-rating-inner text-end">
+                      <input type="radio" name="stars" id="st1"><label for="st1"><span class="star-stroke"><span class="star-fill"></span></span></label>
+                      <input type="radio" name="stars" id="st2"><label for="st2"><span class="star-stroke"><span class="star-fill"></span></span></label>
+                      <input type="radio" name="stars" id="st3"><label for="st3"><span class="star-stroke"><span class="star-fill"></span></span></label>
+                      <input type="radio" name="stars" id="st4"><label for="st4"><span class="star-stroke"><span class="star-fill"></span></span></label>
+                      <input type="radio" name="stars" id="st5"><label for="st5"><span class="star-stroke"><span class="star-fill"></span></span></label>
+                    </div>
+                  </div>
+                  <label for="review">Your review *</label>
+                  <textarea rows="4" class="mb-3 border border-2 border-grey1" id="review" required></textarea>
+                  <span class="d-md-flex justify-content-between">
+                    <span class="w-md-50 me-2">
+                      <label for="full-name" class="mb-2">Name*</label>
+                      <input type="text" id="full-name" class="mb-3 border border-2 border-grey1" required>
+                    </span>
+                    <span class="w-md-50">
+                      <label for="email" class="mb-2">Email*</label>
+                      <input type="email" id="email" class="mb-3 border border-2 border-grey1" required>
+                    </span>
+                  </span>
+                  <input type="checkbox" id="cookie-concent" class="mb-1">
+                  <label for="cookie-concent" class="mb-2">Save my name, email, and website in this browser for the next time I comment.</label><br>
+                  <button class="btn btn2">Submit</button>
+                </form>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="faq-tab-pane" role="tabpanel" tabindex="0">
+              <h6 class="mb-4">Frequently Asked Questions</h6>
+              {% with product.faqs.all as faqs %}
+                {% if faqs %}
+                  <div class="accordion" id="productFaqAccordion">
+                    {% for faq in faqs %}
+                      {% if faq.is_active %}
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                              {{ faq.question }}
+                            </button>
+                          </h2>
+                          <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#productFaqAccordion">
+                            <div class="accordion-body">{{ faq.answer|linebreaksbr }}</div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <p>No FAQs available for this product.</p>
+                {% endif %}
+              {% endwith %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Product Detail Section Ends -->
+
+<!-- Related Product Section Starts -->
+<section class="related-product pb-10">
+  <div class="container">
+    <div class="related-product-inner">
+      <div class="section-title mb-4 text-center text-lg-start">
+        <h3>Related Products</h3>
+      </div>
+      <div class="section-body">
+        <div class="row gx-md-5 gy-5">
+          {% for related in related_products %}
+          <div class="col-lg-3 col-md-6">
+            <div class="product-box p-4 rounded2 border border-2 border-lightgreen">
+              <div class="product-image mb-5 position-relative bottom-0">
+                <a href="{% url 'productdetail' related.id %}">
+                  <img src="{{ related.image.url }}" alt="{{ related.name }}" class="w-100 rounded2">
+                </a>
+                <div class="add-to-cart-btn position-absolute" style="bottom: 10px; left: 50%; transform: translateX(-50%);">
+                  <form method="post" action="{% url 'add_to_cart' related.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="btn btn2 btn-sm">
+                      <i class="fa fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="product-info">
+                <h5 class="mb-2">
+                  <a href="{% url 'productdetail' related.id %}" class="black">{{ related.name }}</a>
+                </h5>
+                <span class="h6 fw-bold green">Rs: {{ related.price }}</span>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center w-100">No related products found.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Related Product Section Ends -->
+
+<!-- Newsletter Section Starts -->
+<section class="newsletter text-white z-1 position-relative">
+  <div class="container">
+    <div class="newsletter-inner p-6 bg-green1 rounded2 text-center text-md-start">
+      <div class="row gx-xl-5 gy-4 align-items-center">
+        <div class="col-xl-5">
+          <div class="section-title">
+            <h6 class="text-uppercase fw-medium mb-1 text-white">Subscribe Newsletter</h6>
+            <h3 class="text-white">Don't miss our future updates! Get subscribed today!</h3>
+          </div>
+        </div>
+        <div class="col-xl-7">
+          <div class="section-body">
+            <p class="mb-3">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporatu incididunt ut labore et dolore magna aliqua."</p>
+            <div class="search-bar d-md-flex">
+              <input type="text" placeholder="Search..." class="w-100 mx-1"><a href="#" class="btn btn3 mx-1">subscribe</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Newsletter Section Ends -->
+
+<style>
+  /* Product Description Styles */
+  .product-short-desc,
+  .product-full-description,
+  .product-tab-description {
+    line-height: 1.8;
+    color: #555;
+  }
+
+  .product-short-desc h1,
+  .product-full-description h1,
+  .product-tab-description h1 {
+    font-size: 28px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .product-short-desc h2,
+  .product-full-description h2,
+  .product-tab-description h2 {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .product-short-desc h3,
+  .product-full-description h3,
+  .product-tab-description h3 {
+    font-size: 20px;
+    margin-top: 18px;
+    margin-bottom: 12px;
+    color: #333;
+  }
+
+  .product-short-desc p,
+  .product-full-description p,
+  .product-tab-description p {
+    margin-bottom: 15px;
+  }
+
+  .product-short-desc ul,
+  .product-full-description ul,
+  .product-tab-description ul,
+  .product-short-desc ol,
+  .product-full-description ol,
+  .product-tab-description ol {
+    padding-left: 25px;
+    margin-bottom: 15px;
+  }
+
+  .product-short-desc ul li,
+  .product-full-description ul li,
+  .product-tab-description ul li,
+  .product-short-desc ol li,
+  .product-full-description ol li,
+  .product-tab-description ol li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+
+  .product-short-desc b,
+  .product-full-description b,
+  .product-tab-description b,
+  .product-short-desc strong,
+  .product-full-description strong,
+  .product-tab-description strong {
+    color: #28a745;
+  }
+
+  .product-short-desc table,
+  .product-full-description table,
+  .product-tab-description table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  .product-short-desc table th,
+  .product-full-description table th,
+  .product-tab-description table th,
+  .product-short-desc table td,
+  .product-full-description table td,
+  .product-tab-description table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .product-short-desc table th,
+  .product-full-description table th,
+  .product-tab-description table th {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .product-short-desc table tr:nth-child(even),
+  .product-full-description table tr:nth-child(even),
+  .product-tab-description table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .product-short-desc table tr:hover,
+  .product-full-description table tr:hover,
+  .product-tab-description table tr:hover {
+    background-color: #f0f8f0;
+  }
+
+  /* Specifications Table Styles */
+  .product-specifications {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+  }
+
+  .product-specifications h4 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .spec-section {
+    margin-bottom: 20px;
+  }
+
+  .spec-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .spec-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #28a745;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #28a745;
+    display: inline-block;
+  }
+
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .spec-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .spec-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .spec-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  .spec-label {
+    padding: 10px 15px;
+    font-weight: 600;
+    color: #555;
+    width: 40%;
+    background-color: #fafafa;
+    font-size: 14px;
+  }
+
+  .spec-value {
+    padding: 10px 15px;
+    color: #333;
+    width: 60%;
+    font-size: 14px;
+  }
+
+  .spec-value b,
+  .spec-value strong {
+    color: #28a745;
+  }
+
+  /* Add to Cart Button */
+  .add-to-cart-btn {
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+    border: 2px solid #28a745 !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .add-to-cart-btn:hover {
+    background-color: #218838 !important;
+    border-color: #218838 !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+  }
+
+  .add-to-cart-btn i {
+    color: #ffffff !important;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .spec-label {
+      width: 45%;
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+
+    .spec-value {
+      width: 55%;
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+
+    .product-specifications {
+      padding: 15px;
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function(){
+    // Color swatch selection
+    const swatches = document.querySelectorAll('.color-swatch');
+    const selectedInput = document.getElementById('selectedColor');
+    if(!swatches.length) return;
+
+    // try to persist selection per-product using localStorage
+    const parent = document.querySelector('.product-colors[data-product-id]');
+    const productId = parent ? parent.getAttribute('data-product-id') : null;
+    const storageKey = productId ? `selectedColor_${productId}` : null;
+
+    // restore previous selection
+    if(storageKey && localStorage.getItem(storageKey)){
+      const saved = localStorage.getItem(storageKey);
+      swatches.forEach(s => {
+        if(s.getAttribute('data-color') === saved){
+          s.classList.add('selected-swatch');
+          if(selectedInput) selectedInput.value = saved;
+        }
+      });
+    }
+
+    swatches.forEach(s => {
+      s.addEventListener('click', function(){
+        // remove selected class from others
+        swatches.forEach(x => x.classList.remove('selected-swatch'));
+        this.classList.add('selected-swatch');
+        const color = this.getAttribute('data-color');
+        if(selectedInput) selectedInput.value = color;
+        if(storageKey) localStorage.setItem(storageKey, color);
+      });
+    });
+
+    // Basic visual style for selected swatch and accordion hover/focus (theme green)
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .color-swatch.selected-swatch{ box-shadow:0 0 0 2px rgba(0,0,0,0.06), 0 0 0 4px rgba(40,167,69,0.08); border-color:rgba(40,167,69,0.25);}
+      .color-swatch .swatch-circle{flex:0 0 auto}
+      /* Accordion hover/focus uses theme green */
+      .accordion-button:hover, .accordion-button:focus { color: #28a745; }
+      .accordion-button:not(.collapsed) { color: #28a745; }
+
+      /* Add to Cart button hover effect */
+      .add-to-cart-btn:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+      }
+
+      /* Related product add to cart button */
+      .product-box .add-to-cart-btn {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .product-box:hover .add-to-cart-btn {
+        opacity: 1;
+      }
+    `;
+    document.head.appendChild(style);
+  })();
+</script>
+{% endblock %}

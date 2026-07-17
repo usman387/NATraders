@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <!-- Banner Section Starts -->
+  <section class="banner breadcrumb mb-0 pt-11 pb-10 position-relative rounded3 rounded-top-0">
+    <div class="overlay rounded3 rounded-top-0"></div>
+    <div class="container position-relative">
+      <div class="banner-inner pt-10 w-lg-75 m-auto text-center text-white ">
+        <div class="section-title mb-2">
+          <h1 class="text-white mb-2">Shop</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Banner Section Ends -->
+
+  <!-- Product List Section Starts -->
+  <section class="product-list py-10">
+    <div class="container">
+      <div class="product-list-inner">
+        <div class="row gx-lg-5 gy-5">
+          <div class="col-lg-4 order-2 order-lg-1">
+            <div class="section-left">
+              <div class="search-bar d-md-flex rounded2 mb-6">
+                <input type="text" name="search" id="search" class="bg-lightgreen" placeholder="Search..."><a href="#" class="btn btn2"><i class="fa fa-search" aria-hidden="true"></i></a>
+              </div>
+              <div class="price-filer p-6 mb-6 border border-2 border-lightgreen rounded2">
+                <div class="price-filter-title px-2 py-3 text-center bg-lightgreen rounded2 mb-6">
+                  <h4>Price</h4>
+                </div>
+                <div class="filter-container">
+                  <div class="range-slider">
+                      <div class="range-selected"></div>
+                      <input type="range" min="0" max="100" value="10" id="min-price">
+                      <input type="range" min="0" max="100" value="97" id="max-price">
+                  </div>
+                  <div class="range-info d-flex justify-content-between align-items-center">
+                    <div class="range-values h6 mb-0">
+                      <span id="min-value">$10</span>
+                      <span> - </span>
+                      <span id="max-value">$97</span>
+                    </div>
+                    <button class="btn btn2">FILTER</button>
+                  </div>
+                </div>
+              </div>
+              <div class="related-products p-6 mb-6 border border-2 border-lightgreen rounded2">
+                <div class="price-filter-title px-2 py-3 text-center bg-lightgreen rounded2 mb-6">
+                  <h4>Related Products</h4>
+                </div>
+                <div class="related-products-list">
+                  <div class="row gy-4">
+                    <div class="col-lg-12 col-md-6">
+                      <div class="recent-post-box d-flex align-items-center">
+                        <div class="recent-post-image w-30 me-3">
+                          <a href="productdetail"><img src="{% static 'images/Solar_Panel_EV_ChargingStation.H03.2k.png' %}" alt="blog image" class="w-100 rounded1"></a>
+                        </div>
+                        <div class="recent-post-info w-70">
+                          <h6 class="mb-1"><a href="product-detail.html" class="black">Solar Panel EV Charger</a></h6>
+                          <span class="small">June 21 2025</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-6">
+                      <div class="recent-post-box d-flex align-items-center">
+                        <div class="recent-post-image w-30 me-3">
+                          <a href="productdetail"><img src="{% static 'images/Electric_CarCharger.H03.2k.png' %}" alt="blog image" class="w-100 rounded1"></a>
+                        </div>
+                        <div class="recent-post-info w-70">
+                          <h6 class="mb-1"><a href="productdetail" class="black">Electric Car Charger</a></h6>
+                          <span class="small">Jan 25 2025</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-6">
+                      <div class="recent-post-box d-flex align-items-center">
+                        <div class="recent-post-image w-30 me-3">
+                          <a href="product-detail.html"><img src="{% static 'images/Charging_ElectricStation.H03.2k.png' %}" alt="blog image" class="w-100 rounded1"></a>
+                        </div>
+                        <div class="recent-post-info w-70">
+                          <h6 class="mb-1"><a href="product-detail.html" class="black">Home Charging</a></h6>
+                          <span class="small">Jan 25 2025</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-6">
+                      <div class="recent-post-box d-flex align-items-center">
+                        <div class="recent-post-image w-30 me-3">
+                          <a href="product-detail.html"><img src="{% static 'images/Car_ChargingStation.I01.png' %}" alt="blog image" class="w-100 rounded1"></a>
+                        </div>
+                        <div class="recent-post-info w-70">
+                          <h6 class="mb-1"><a href="product-detail.html" class="black">Car Charging Station</a></h6>
+                          <span class="small">Jan 25 2025</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="other-categories p-6 mb-6 border border-2 border-lightgreen rounded2">
+                <div class="price-filter-title px-2 py-3 text-center bg-lightgreen rounded2 mb-6">
+                  <h4>Categories</h4>
+                </div>
+                <div class="categories-list">
+                  <ul class="list-unstyled">
+                    <li class="mb-3 pb-3 border-dashed border-top-0 border-start-0 border-end-0 border-2"><a href="#" class="grey"><i class="fa fa-check me-2 green" aria-hidden="true"></i> Eco Fuel (2)</a></li>
+                    <li class="mb-3 pb-3 border-dashed border-top-0 border-start-0 border-end-0 border-2"><a href="#" class="grey"><i class="fa fa-check me-2 green" aria-hidden="true"></i> Electric Cars (4)</a></li>
+                    <li class="mb-3 pb-3 border-dashed border-top-0 border-start-0 border-end-0 border-2"><a href="#" class="grey"><i class="fa fa-check me-2 green" aria-hidden="true"></i> Electric Chargers (4)</a></li>
+                    <li><a href="#" class="grey"><i class="fa fa-check me-2 green" aria-hidden="true"></i> Ev Charging Points (8)</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="social-links p-6 border border-2 border-lightgreen rounded2">
+                <div class="price-filter-title px-2 py-3 text-center bg-lightgreen rounded2 mb-6">
+                  <h4>Social Media</h4>
+                </div>
+                <div class="media-link-box">
+                  <div class="row gy-4">
+                    <div class="col-md-6">
+                      <div class="media-link">
+                        <a href="#" class="btn btn2 p-3 rounded-2 position-relative text-capitalize w-100"><span class="position-relative"><i class="fa fa-facebook-official pe-3 " aria-hidden="true"></i><Span class="small">Facebook</Span></span></a>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="media-link">
+                        <a href="#" class="btn btn2 p-3 rounded-2 position-relative text-capitalize w-100"><span class="position-relative"><i class="fa fa-twitter pe-3 " aria-hidden="true"></i><span class="small">twitter</span></span></a>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="media-link">
+                        <a href="#" class="btn btn2 p-3 rounded-2 position-relative text-capitalize w-100"><span class="position-relative"><i class="fa fa-whatsapp pe-3 " aria-hidden="true"></i><span class="small">whatsapp</span></span></a>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="media-link">
+                        <a href="#" class="btn btn2 p-3 rounded-2 position-relative text-capitalize w-100"><span class="position-relative"><i class="fa fa-linkedin-square pe-3 " aria-hidden="true"></i><span class="small"></span>LinkedIn</span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 order-1 order-lg-2">
+            <div class="section-right text-center">
+              <div class="sort d-md-flex justify-content-between align-items-center mb-6">
+                <p class="my-2">Showing all 6 results</p>
+                <span>
+                  <select name="sort" id="sort">
+                    <option value="1">Default Sorting</option>
+                    <option value="1">Sort by Popularity</option>
+                    <option value="1">Sort by avrage rating</option>
+                    <option value="1">Sort by latest</option>
+                  </select>
+                </span>
+              </div>
+              <div class="product-listing">
+  <div class="row gy-4">
+    {% for product in products %}
+    <div class="col-md-6">
+      <div class="product-box p-4 rounded2 border border-2 border-lightgreen">
+        <div class="product-image mb-5 position-relative bottom-0">
+          <a href="{% url 'productdetail' product.id %}">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
+          </a>
+
+          <div class="add-to-cart-btn position-absolute">
+            <a href="cart" class="btn btn2">Add to cart</a>
+          </div>
+        </div>
+        <div class="product-info">
+          <h5 class="mb-2">
+            <a href="{% url 'productdetail' product.id %}" class="black">{{ product.name }}</a>
+          </h5>
+          <span class="h6 fw-bold green">${{ product.price }}</span>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <p>No products available yet. Please check back later.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Product List Section Ends -->
+
+  <!-- Newsletter Section Starts -->
+   <section class="newsletter text-white z-1 position-relative">
+    <div class="container">
+      <div class="newsletter-inner p-6 bg-green1 rounded2 text-center text-md-start">
+        <div class="row gx-xl-5 gy-4 align-items-center">
+          <div class="col-xl-5">
+            <div class="section-title">
+              <h6 class="text-uppercase fw-medium mb-1 text-white">Subscribe Newsletter</h6>
+              <h3 class="text-white">Don't miss our future updates! Get subscribed today!</h3>
+            </div>
+          </div>
+          <div class="col-xl-7">
+            <div class="section-body">
+              <p class="mb-3">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporatu incididunt ut labore et dolore magna aliqua.”</p>
+              <div class="search-bar d-md-flex">
+                <input type="text" placeholder="Search..." class="w-100 mx-1"><a href="#" class="btn btn3 mx-1">subscribe</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </section>
+  <!-- Newsletter Section Starts -->
+
+{% endblock %}

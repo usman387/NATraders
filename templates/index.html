@@ -1,0 +1,714 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  /* Product card hover Add to Cart overlay */
+  .product-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-img {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .product-card .card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.15);
+    opacity: 0;
+    transition: opacity .18s ease-in-out, transform .18s ease-in-out;
+    transform: translateY(8px);
+    z-index: 2;
+  }
+
+  .product-card:hover .card-overlay,
+  .product-card:focus-within .card-overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .product-card .card-overlay .btn {
+    min-width: 140px;
+  }
+
+  /* Add to Cart Button Styles */
+  .add-to-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #4CAF50;
+    color: white !important;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .add-to-cart-btn:hover {
+    background: #45a049;
+    transform: scale(1.05);
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+  }
+
+  .add-to-cart-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .add-to-cart-btn i {
+    font-size: 16px;
+  }
+
+  /* Product image clickable */
+  .product-img-link {
+    display: block;
+    position: relative;
+  }
+
+  .product-img-link img {
+    transition: transform 0.3s ease;
+  }
+
+  .product-img-link:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Always show button on small screens for touch devices */
+  @media (max-width: 767.98px) {
+    .product-card .card-overlay {
+      opacity: 1;
+      background: transparent;
+      transform: none;
+      position: relative;
+      margin-top: -5px;
+    }
+    .product-card .card-overlay .btn {
+      min-width: 100%;
+      width: 100%;
+    }
+  }
+</style>
+
+<!-- Banner Section Starts -->
+<section class="banner-1 pt-11 position-relative rounded3 rounded-top-0">
+  <div class="overlay"></div>
+  <div class="container position-relative">
+    <div class="banner-1-inner pt-9 text-white position-relative text-center text-lg-start">
+      <div class="section-title position-relative mb-9">
+        <div class="row gx-lg-5 gy-4">
+          <div class="col-lg-8">
+            <div class="section-title-left">
+              <h5 class="mb-2 text-white text-uppercase fw-medium">Eco Friendly Solution</h5>
+              <h1 class="text-white text-uppercase ps-4 border-start border-3 border-green"><span class="green">Powering</span> a Sustainable tomorrow</h1>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="section-title-right text-center position-relative">
+              <a href="service-list.html">
+                <div class="spin-demo-main position-relative">
+                  <img src="{% static 'images/top-right.png' %}" alt="">
+                  <svg id="rotatingText" viewBox="0 0 200 200" width="150" height="150">
+                    <defs>
+                      <path id="circle" d="M 100,100 m -75,0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"></path>
+                    </defs>
+                    <text><textPath alignment-baseline="hanging" xlink:href="#circle" class="text">Explore Catalog &nbsp; Explore Catalog</textPath></text>
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-body position-relative overflow-visible">
+        <div class="banner-slider">
+          {% for banner in banners %}
+          <div class="slide">
+            <div class="row gx-lg-5">
+              <div class="col-xl-8 order-2 order-xl-1 align-self-end">
+                <div class="banner-1-image text-center">
+                  <div class="banner-1-image-inner">
+                    <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="w-100">
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 order-1 order-xl-2">
+                <div class="banner-info-right">
+                  <h3 class="text-white mb-2">{{ banner.title }}</h3>
+                  <p class="mb-4">{{ banner.description }}</p>
+                  {% if banner.button_text %}
+                    <a href="{{ banner.button_link }}" class="btn btn-primary">{{ banner.button_text }}</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-white">No banners available. Please add banners in admin.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Banner Section Ends -->
+
+<!-- Mission / Products Tabs Section -->
+<section class="mission-section">
+  <div class="container">
+    <div class="row align-items-start mb-5">
+      <div class="col-lg-4">
+        <div class="section-title">
+          <small>Convenient & Fast</small>
+          <h2><span>Our Mission</span> Is To Charge Your Electric Vehicle Properly</h2>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <ul class="nav nav-pills justify-content-lg-end mt-2 mt-lg-0" id="productTabs">
+          <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab1">Okla</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab2">YJ Future</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab3">Road King</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <!-- Tab 1 -->
+      <div class="tab-pane fade show active" id="tab1">
+        <div class="row g-4">
+          {% for product in products_by_tab.tab1 %}
+          <div class="col-lg-3 col-md-6">
+            <div class="product-card">
+              <div class="product-img position-relative">
+                <a href="{% url 'productdetail' product.id %}" class="product-img-link">
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
+                </a>
+                <div class="card-overlay">
+                  <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form w-100">
+                    {% csrf_token %}
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn btn2 add-to-cart-btn w-100" data-product-id="{{ product.id }}">
+                      <i class="fa fa-shopping-cart"></i> Add to Cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <h4 class="product-title mt-3">
+                <a href="{% url 'productdetail' product.id %}" class="text-decoration-none text-dark">
+                  {{ product.name }}
+                </a>
+              </h4>
+              <div class="product-price">${{ product.price }}</div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No products in this category yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Tab 2 -->
+      <div class="tab-pane fade" id="tab2">
+        <div class="row g-4">
+          {% for product in products_by_tab.tab2 %}
+          <div class="col-lg-4 col-md-6">
+            <div class="product-card">
+              <div class="product-img position-relative">
+                <a href="{% url 'productdetail' product.id %}" class="product-img-link">
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
+                </a>
+                <div class="card-overlay">
+                  <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form w-100">
+                    {% csrf_token %}
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn btn2 add-to-cart-btn w-100" data-product-id="{{ product.id }}">
+                      <i class="fa fa-shopping-cart"></i> Add to Cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <h4 class="product-title mt-3">
+                <a href="{% url 'productdetail' product.id %}" class="text-decoration-none text-dark">
+                  {{ product.name }}
+                </a>
+              </h4>
+              <div class="product-price">${{ product.price }}</div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No products in this category yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Tab 3 -->
+      <div class="tab-pane fade" id="tab3">
+        <div class="row g-4">
+          {% for product in products_by_tab.tab3 %}
+          <div class="col-lg-3 col-md-6">
+            <div class="product-card">
+              <div class="product-img position-relative">
+                <a href="{% url 'productdetail' product.id %}" class="product-img-link">
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 rounded2">
+                </a>
+                <div class="card-overlay">
+                  <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form w-100">
+                    {% csrf_token %}
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn btn2 add-to-cart-btn w-100" data-product-id="{{ product.id }}">
+                      <i class="fa fa-shopping-cart"></i> Add to Cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <h4 class="product-title mt-3">
+                <a href="{% url 'productdetail' product.id %}" class="text-decoration-none text-dark">
+                  {{ product.name }}
+                </a>
+              </h4>
+              <div class="product-price">${{ product.price }}</div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No products in this category yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Us Section -->
+<section class="about-us bg-lightgreen py-10">
+    <div class="container">
+      <div class="about-us-inner pt-11">
+        <div class="row gy-5 gx-lg-5 align-items-center">
+          <div class="col-lg-6">
+            <div class="section-right text-center text-lg-start">
+              <div class="section-title mb-5">
+                <h6 class="mb-2 green1 text-uppercase fw-medium">About Us</h6>
+                <h2 class="ps-4 border-start border-3 border-green">Charging Solutions For all <span class="green">business and EV Drivers</span></h2>
+              </div>
+              <div class="section-body">
+                <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique recusandae id nihil, enim magni tempora quo! Officiis, maxime accusamus. voluptatum adipisci.</p>
+                <div class="service-list text-start">
+                  <div class="service-progress-list mb-6">
+                    <Span class="fw-bold">Eco-friendly Charging</Span>
+                    <div class="progress-bar-section w-lg-75">
+                      <div class="progress bg-darkgreen position-relative overflow-visible mt-2"
+                            role="progressbar" aria-label="Basic example"
+                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
+                            style="height: 15px">
+
+                        <div class="progress-bar rounded-start-2 bg-green position-relative overflow-visible"
+                              style="width: 90%">
+
+                          <div class="percentage-wrapper position-absolute p-2 bg-green d-flex align-items-center justify-content-between rounded-circle">
+                            <span class="progress-num" data-val="90">0</span><span>%</span>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="service-progress-list mb-6">
+                    <Span class="fw-bold">Energy Storage Systems</Span>
+                    <div class="progress-bar-section w-lg-75">
+                      <div class="progress bg-darkgreen position-relative overflow-visible mt-2"
+                            role="progressbar" aria-label="Basic example"
+                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
+                            style="height: 15px">
+
+                        <div class="progress-bar rounded-start-2 bg-green position-relative overflow-visible"
+                              style="width: 85%">
+
+                          <div class="percentage-wrapper position-absolute p-2 bg-green d-flex align-items-center justify-content-between rounded-circle">
+                            <span class="progress-num" data-val="85">0</span><span>%</span>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="service-progress-list">
+                    <Span class="fw-bold">EV Drivers Services</Span>
+                    <div class="progress-bar-section w-lg-75">
+                      <div class="progress bg-darkgreen position-relative overflow-visible mt-2"
+                            role="progressbar" aria-label="Basic example"
+                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
+                            style="height: 15px">
+
+                        <div class="progress-bar rounded-start-2 bg-green position-relative overflow-visible"
+                              style="width: 89%">
+
+                          <div class="percentage-wrapper position-absolute p-2 bg-green d-flex align-items-center justify-content-between rounded-circle">
+                            <span class="progress-num" data-val="89">0</span><span>%</span>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="section-left position-relative">
+              <img src="{% static 'images/kindelmedia-9800029.jpg' %}" alt="about image" class="w-100 rounded2">
+              <div class="about-counter-box bg-green1 border border-4 border-lightgreen p-4 text-white position-absolute rounded2 text-center text-lg-start mt-2">
+                <div class="about-counter-image mb-2">
+                  <img src="{% static 'images/charging-station.png' %}" alt="about counter image">
+                </div>
+                <h2 class="text-white"><span class="num" data-val="50"></span>+</h2>
+                <span class="small">Charging Stations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Service Section -->
+<section class="service pb-10">
+  <div class="container">
+    <div class="service-inner">
+      <div class="section-title mb-6 text-center text-lg-start">
+          <div class="row gx-lg-5 gy-4 align-items-center">
+            <div class="col-lg-7">
+              <div class="section-title-left">
+                <h6 class="mb-2 green1 text-uppercase fw-medium">Our Services</h6>
+                <h2 class="ps-4 border-start border-3 border-green">Best EV <span class="green">charging service</span> for your electric vehicle</h2>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="section-title-right">
+                <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi dolor architecto molestias aritatis minima accusamus.</p>
+                <a href="service-list.html" class="btn btn2">More Servicess</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="section-body">
+        <div class="row gy-4">
+          {% for service in services %}
+          <div class="col-lg-4 col-md-6">
+            <div class="service-box p-6 border bg-white border-2 border-lightgreen rounded2 shadow">
+              <div class="service-icon mb-4"><img src="{{ service.icon.url }}" alt="{{ service.title }}"></div>
+              <div class="service-info">
+                <h4><a href="{{ service.link }}" class="black">{{ service.title }}</a></h4>
+                <p class="mt-2 mb-4">{{ service.description }}</p>
+                <a href="{{ service.link }}" class="btn border border-1 border-green">Learn More</a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No services added yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- More About Section -->
+<section class="more-about pt-10 rounded3 position-relative z-1">
+    <div class="container">
+      <div class="more-about-inner px-2 text-center text-xl-start">
+        <div class="row gx-xl-5 gy-5 align-items-center">
+          <div class="col-xl-7">
+            <div class="section-left m-0 pb-9">
+              <div class="section-title mb-6">
+                <h6 class="text-uppercase fw-medium green1 mb-1">Who we are</h6>
+                <h2 class="ps-4 border-start border-3 border-green text-white">Effortless Charging from <span class="green">Best in business</span></h2>
+              </div>
+              <div class="section-body text-white position-relative">
+                <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <a href="about.html" class="btn btn2 mb-7">Discover More</a>
+                <div class="about-counter text-center text-xl-start">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="counter-box mb-6 pb-6 border-bottom border-1 border-grey">
+                        <h2 class="green"><span class="num" data-val="20"></span>+</h2>
+                        <span class="text-uppercase fw-medium">Years Experience</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="counter-box mb-6 pb-6 border-bottom border-1 border-grey">
+                        <h2 class="green"><span class="num" data-val="80"></span>+</h2>
+                        <span class="text-uppercase fw-medium">Service Stations</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="counter-box mb-6 pb-6">
+                        <h2 class="green"><span class="num" data-val="15"></span>K+</h2>
+                        <span class="text-uppercase fw-medium">Positive Reviews</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="counter-box mb-6 border-0">
+                        <h2 class="green"><span class="num" data-val="20"></span>K+</h2>
+                        <span class="text-uppercase fw-medium">Happy Customers</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-5">
+            <div class="section-right">
+              <div class="about-video-wrapper position-relative text-center">
+                <img src="{% static 'images/electric-vehicle-charging-png.png' %}" alt="video thumbnail" class="w-lg-75 w-md-50 w-100 m-auto rounded2">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- How we work Section -->
+<section class="how-work bg-lightgreen py-10">
+    <div class="container">
+      <div class="how-work-inner">
+        <div class="section-title text-center w-lg-50 w-md-75 m-auto mb-8">
+          <h6 class="text-uppercase fw-medium mb-1 green1">How we work</h6>
+          <h2 class="">Key Features <span class="green"> & </span> Specifications</h2>
+        </div>
+        <div class="section-body position-relative">
+          <div class="timeline position-relative z-2 text-center text-md-start">
+            <div class="timeline-row position-relative w-md-50 mb-4">
+              <div class="work-box-number text-center p-2 rounded-circle border border-3 border-lightgreen bg-green d-inline-block h-auto mb-2 position-absolute top-50 start-100 translate-middle">
+                <h4 class="text-white">01.</h4>
+              </div>
+              <div class="work-info position-relative p-4 border-3 border border-white bg-lightgreen1 me-9 rounded2">
+                <h4 class="mb-3">Motor Power</h4>
+                <p>Experience powerful performance with a 1500W motor, driving your future electric bike to unmatched efficiency and speed.</p>
+              </div>
+            </div>
+
+            <div class="timeline-row position-relative w-md-50 ms-auto mb-4">
+              <div class="work-box-number text-center p-2 rounded-circle border border-3 border-lightgreen bg-green d-inline-block h-auto mb-2 position-absolute top-50 start-0 translate-middle">
+                <h4 class="text-white">02.</h4>
+              </div>
+              <div class="work-info position-relative p-4 border-3 border border-white bg-lightgreen1 ms-9 rounded2">
+                <h4 class="mb-3">Battery</h4>
+                <p>Ride longer and stronger with Graphene & lithium Battery, delivering unmatched energy efficiency and reliability.</p>
+              </div>
+            </div>
+
+            <div class="timeline-row position-relative w-md-50 mb-4">
+              <div class="work-box-number text-center p-2 rounded-circle border border-3 border-lightgreen bg-green d-inline-block h-auto mb-2 position-absolute top-50 start-100 translate-middle">
+                <h4 class="text-white">03.</h4>
+              </div>
+              <div class="work-info position-relative p-4 border-3 border border-white bg-lightgreen1 me-9 rounded2">
+                <h4 class="mb-3">Best Price</h4>
+                <p>Own your dream electric bike at the best price, delivering exceptional quality and unbeatable value.</p>
+              </div>
+            </div>
+
+            <div class="timeline-row position-relative w-md-50 ms-auto mb-0">
+              <div class="work-box-number text-center p-2 rounded-circle border border-3 border-lightgreen bg-green d-inline-block h-auto mb-2 position-absolute top-50 start-0 translate-middle">
+                <h4 class="text-white">04.</h4>
+              </div>
+              <div class="work-info position-relative p-4 border-3 border border-white bg-lightgreen1 ms-9 rounded2">
+                <h4 class="mb-3">Range Per Charge</h4>
+                <p>Travel up to 80-110 KM per charge, delivering impressive range and unmatched convenience for every journey</p>
+              </div>
+            </div>
+              <div class="timeline-row position-relative w-md-50 mb-4">
+              <div class="work-box-number text-center p-2 rounded-circle border border-3 border-lightgreen bg-green d-inline-block h-auto mb-2 position-absolute top-50 start-100 translate-middle">
+                <h4 class="text-white">05.</h4>
+              </div>
+              <div class="work-info position-relative p-4 border-3 border border-white bg-lightgreen1 me-9 rounded2">
+                <h4 class="mb-3">Charging Time</h4>
+                <p>Recharge in just 5-6 hours, ensuring quick turnaround and maximum efficiency for your daily rides.</p>
+              </div>
+            </div>
+
+            <div class="timeline-row position-relative w-md-50 ms-auto mb-0">
+              <div class="work-box-number text-center p-2 rounded-circle border border-3 border-lightgreen bg-green d-inline-block h-auto mb-2 position-absolute top-50 start-0 translate-middle">
+                <h4 class="text-white">06.</h4>
+              </div>
+              <div class="work-info position-relative p-4 border-3 border border-white bg-lightgreen1 ms-9 rounded2">
+                <h4 class="mb-3">Excellence & Innovation</h4>
+                <p>Designed for performance and durability, built to redefine your electric biking experience with cutting-edge technology.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Testimonial Section -->
+<section class="testimonial-1 py-9 rounded3 rounded-start-0 position-relative">
+  <div class="overlay rounded3 rounded-start-0"></div>
+  <div class="container position-relative">
+    <div class="row align-items-center gx-lg-5">
+      <div class="col-lg-7">
+        <div class="testimonial-slider bg-white rounded2 py-4 position-relative">
+          {% for t in testimonials %}
+          <div class="slide">
+            <div class="review-box p-6 py-8 position-relative">
+              <div class="qoute-icon p-3 h2 bg-lightgreen1 position-absolute rounded2"><i class="fa fa-quote-right green"></i></div>
+              <div class="review-star mb-3">
+                <ul class="list-unstyled d-flex">
+                  {% for i in "12345"|make_list %}
+                    {% if forloop.counter <= t.rating %}
+                      <li><i class="fa fa-star green"></i></li>
+                    {% else %}
+                      <li><i class="fa fa-star-o green"></i></li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+              <div class="review-info mb-6"><p class="h4 fw-normal fst-italic lh-base mb-0">"{{ t.content }}"</p></div>
+              <div class="reviewer-bio d-flex align-items-center">
+                <div class="reviewer-image me-4"><img src="{{ t.image.url }}" alt="{{ t.name }}" class="rounded-circle object-fit-cover"></div>
+                <div class="review-info"><h6 class="grey mb-1">{{ t.name }}</h6><span class="green1 fw-medium">{{ t.position }}</span></div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No testimonials yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-5"> ... </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section class="blog py-10 m-0">
+  <div class="container">
+    <div class="blog-inner">
+      <div class="blog-title mb-6 text-center text-lg-start">
+          <div class="row align-items-center gy-4">
+            <div class="col-lg-7">
+              <div class="blog-title-left">
+                <h6 class="mb-2 green1 text-uppercase fw-medium">Our News & articles</h6>
+                <h2 class="ps-4 border-start border-3 border-green">Latest Buzz <span class="green">what's new?</span></h2>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="blog-title-right">
+                <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi dolor archite ea veritatis minima accusamus.</p>
+                <a href="blog-list.html" class="btn btn2">All Blogs</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="blog-body">
+        <div class="row align-items-stretch gy-4">
+          <div class="col-lg-8">
+            <div class="news-slider h-100 p-6 px-2 rounded2 border border-2 border-lightgreen bg-white">
+              {% for post in blog_posts %}
+              <div class="slide mx-4">
+                <div class="blog-box">
+                  <div class="row align-items-center gy-4">
+                    <div class="col-md-5 order-2 order-md-1">
+                      <div class="blog-info">
+                        <div class="blog-tag px-2 py-1 rounded2 bg-lightgreen black small d-inline-block mb-2"><span class="fw-medium">{{ post.category }}</span></div>
+                        <h4 class="mb-4"><a href="blog-detail.html" class="black">{{ post.title }}</a></h4>
+                        <p class="mb-2">{{ post.excerpt }}</p>
+                        <div class="blog-data pt-2 border-top border-1 border-grey2"><span class="small">{{ post.published_date|date:"F d, Y" }} <span class="mx-2">|</span> 0 Comments</span></div>
+                      </div>
+                    </div>
+                    <div class="col-md-7 order-1 order-md-2">
+                      <div class="blog-image position-relative"><a href="blog-detail.html"><img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-100 rounded1"></a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% empty %}
+              <p>No blog posts yet.</p>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="col-lg-4 d-flex">
+            <div class="blog-body-right h-100 p-6 py-4 rounded2 border border-2 border-lightgreen bg-white">
+              {% with blog_posts|first as latest %}
+              <div class="blog-box">
+                <div class="blog-image mb-4 position-relative"><a href="blog-detail.html"><img src="{{ latest.image.url }}" alt="{{ latest.title }}" class="w-100 rounded1"></a></div>
+                <div class="blog-info">
+                  <h5 class="mb-3"><a href="blog-detail.html" class="black">{{ latest.title }}</a></h5>
+                  <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                    <li class="blog-tag px-2 py-1 rounded2 bg-lightgreen black small"><span class="fw-medium">{{ latest.category }}</span></li>
+                    <li class="small">{{ latest.published_date|date:"F d, Y" }}</li>
+                  </ul>
+                </div>
+              </div>
+              {% endwith %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact & App Section -->
+  <section class="contact-mobile pb-10">
+    <div class="container">
+      <div class="contact-mobile-inner">
+        <div class="row gy-5 align-items-center">
+          <div class="col-lg-6">
+            <div class="mobile-app1">
+              <div class="mobile-app1-title mb-6 text-center">
+                <h6 class="text-uppercase fw-medium green1 mb-1">Download evcharge app</h6>
+                <h2>Discover Nearby <span class="green">charging station</span> with our app</h2>
+              </div>
+              <div class="mobile-app1-body">
+                <div class="mobile-app-image text-center ">
+                  <img src="{% static 'images/mockup-ev.png' %}" alt="app image" class="w-50 m-auto">
+                </div>
+                <ul class="list-unstyled text-center download-btn d-md-flex justify-content-center">
+                  <li class="mx-1 my-2"><a href="#" class="btn btn2"><i class="fa fa-apple me-2" aria-hidden="true"></i> App store</a></li>
+                  <li class="mx-1 my-2 h6"><a href="#" class="btn border border-1 border-green"><i class="fa fa-play me-2" aria-hidden="true"></i> Play Store</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="contact-form p-6 bg-white rounded2 border border-2 border-lightgreen">
+              <div class="form-title mb-6 text-center">
+                <h3 class="mb-2">Any questions? Ask us!!</h3>
+                <p>Magna voluptatum dolorem! Dolores! Sociosqu commodo nobis imperdiet lacinia</p>
+              </div>
+              <div class="career-form-inner">
+                <form>
+                  <input type="text" name="name" id="name" placeholder="Your Name*" class="bg-lightgreen mb-4">
+                  <input type="email" name="email" id="email" placeholder="Your Email*" class="bg-lightgreen mb-4">
+                  <input type="number" name="number" id="number" placeholder="Mobile Number" class="bg-lightgreen mb-4">
+                  <textarea class="bg-lightgreen mb-4" rows="4" placeholder="Enter your message*"></textarea>
+                  <button class="btn btn2">Submit Message</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

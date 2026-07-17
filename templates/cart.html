@@ -1,0 +1,346 @@
+{% include "header.html" %}
+{% load static %}
+{% block content %}
+  <!-- Banner Section Starts -->
+  <section class="banner breadcrumb mb-0 pt-11 pb-10 position-relative rounded3 rounded-top-0">
+    <div class="overlay rounded3 rounded-top-0"></div>
+    <div class="container position-relative">
+      <div class="banner-inner pt-10 w-lg-75 m-auto text-center text-white ">
+        <div class="section-title mb-2">
+          <h1 class="text-white mb-2">Cart</h1>
+          <ul class="list-unstyled d-flex justify-content-center">
+            <li><a href="index.html">Home</a></li>
+            <li class="mx-4"><i class="fa fa-star-o green" aria-hidden="true"></i></li>
+            <li><a href="#">Cart</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Banner Section Ends -->
+<!-- Cart Section Starts -->
+<section class="cart py-10">
+    <div class="container">
+        <div class="cart-inner">
+            {% if cart_items %}
+            <div class="cart-product-table table-responsive px-6 py-4 mb-6 rounded2 border border-2 border-lightgreen">
+                <table class="table mb-4">
+                    <thead>
+                        <tr class="h5">
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items">
+                        {% for item in cart_items %}
+                        <tr class="align-middle" id="item-{{ item.id }}">
+                            <th scope="row">
+                                <a href="#" class="black remove-item" data-item-id="{{ item.id }}">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </th>
+                            <td>
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="rounded1" style="width: 80px; height: 80px; object-fit: cover;">
+                            </td>
+                            <td>
+                                <a href="{% url 'productdetail' item.product.id %}" class="grey">{{ item.product.name }}</a>
+                            </td>
+                            <td class="product-price">${{ item.product.price|floatformat:2 }}</td>
+                            <td>
+                                <input type="number"
+                                       class="border-grey1 quantity update-quantity"
+                                       data-item-id="{{ item.id }}"
+                                       value="{{ item.quantity }}"
+                                       min="1"
+                                       max="{{ item.product.stock }}">
+                            </td>
+                            <td class="item-subtotal">${{ item.get_subtotal|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="#" class="btn btn2 opacity-50" id="update-cart-btn">Update Cart</a>
+                    <a href="#" class="btn btn-danger" id="clear-cart-btn">Clear Cart</a>
+                </div>
+            </div>
+            <div class="section-bottom">
+                <div class="row gx-xl-5 gy-5">
+                    <div class="col-lg-6">
+                        <div class="cart-coupon justify-content-center px-6 py-4 d-md-flex rounded2 border border-2 border-lightgreen">
+                            <input type="text" name="coupon" id="coupon" class="w-md-60 me-4 border-grey1 my-1" placeholder="Enter coupon code">
+                            <a href="#" class="btn btn2 my-1" id="apply-coupon">Apply coupon</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="cart-total px-6 py-4 rounded2 border border-2 border-lightgreen">
+                            <h5 class="mb-4">Cart Totals</h5>
+                            <ul class="list-unstyled text-decoration-none fw-semibold mb-4">
+                                <li class="justify-content-between d-flex mb-2 pb-2 border-bottom border-grey1">
+                                    <span>Product</span>
+                                    <span>Subtotal</span>
+                                </li>
+                                {% for item in cart_items %}
+                                <li class="justify-content-between d-flex mb-2 pt-2 fw-medium">
+                                    <span>{{ item.product.name }} x {{ item.quantity }}</span>
+                                    <span class="cart-item-subtotal">${{ item.get_subtotal|floatformat:2 }}</span>
+                                </li>
+                                {% endfor %}
+                                <li class="justify-content-between d-flex mb-2 pb-2 border-bottom border-grey1">
+                                    <span>Subtotal</span>
+                                    <span id="cart-subtotal">${{ cart_total|floatformat:2 }}</span>
+                                </li>
+                                <li class="justify-content-between d-flex">
+                                    <span><strong>Total</strong></span>
+                                    <span id="cart-total"><strong>${{ cart_total|floatformat:2 }}</strong></span>
+                                </li>
+                            </ul>
+                            <div class="checkout-btn">
+                                <a href="{% url 'checkout' %}" class="btn btn2">Proceed to checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <h3>Your cart is empty</h3>
+                <p class="mb-4">Start shopping to add items to your cart</p>
+                <a href="{% url 'productslist' %}" class="btn btn2">Continue Shopping</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- Cart Section Ends -->
+<!-- Newsletter Section Starts -->
+   <section class="newsletter text-white z-1 position-relative">
+    <div class="container">
+      <div class="newsletter-inner p-6 bg-green1 rounded2 text-center text-md-start">
+        <div class="row gx-xl-5 gy-4 align-items-center">
+          <div class="col-xl-5">
+            <div class="section-title">
+              <h6 class="text-uppercase fw-medium mb-1 text-white">Subscribe Newsletter</h6>
+              <h3 class="text-white">Don't miss our future updates! Get subscribed today!</h3>
+            </div>
+          </div>
+          <div class="col-xl-7">
+            <div class="section-body">
+              <p class="mb-3">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporatu incididunt ut labore et dolore magna aliqua.”</p>
+              <div class="search-bar d-md-flex">
+                <input type="text" placeholder="Search..." class="w-100 mx-1"><a href="#" class="btn btn3 mx-1">subscribe</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </section>
+  <!-- Newsletter Section Starts -->
+
+
+{% endblock %}
+<!-- Add this JavaScript at the bottom of your template -->
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Update quantity
+    document.querySelectorAll('.update-quantity').forEach(input => {
+        input.addEventListener('change', function() {
+            const itemId = this.dataset.itemId;
+            const quantity = this.value;
+            updateCartItem(itemId, quantity);
+        });
+    });
+
+    // Remove item
+    document.querySelectorAll('.remove-item').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const itemId = this.dataset.itemId;
+            if (confirm('Are you sure you want to remove this item?')) {
+                removeCartItem(itemId);
+            }
+        });
+    });
+
+    // Update cart button
+    document.getElementById('update-cart-btn')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.update-quantity').forEach(input => {
+            const itemId = input.dataset.itemId;
+            const quantity = input.value;
+            updateCartItem(itemId, quantity);
+        });
+    });
+
+    // Clear cart
+    document.getElementById('clear-cart-btn')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('Are you sure you want to clear your cart?')) {
+            clearCart();
+        }
+    });
+
+    // Apply coupon
+    document.getElementById('apply-coupon')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        const coupon = document.getElementById('coupon').value;
+        if (coupon) {
+            alert('Coupon functionality coming soon!');
+        } else {
+            alert('Please enter a coupon code');
+        }
+    });
+
+    // Function to update cart item
+    function updateCartItem(itemId, quantity) {
+        if (quantity < 1) {
+            if (confirm('Quantity must be at least 1. Remove item?')) {
+                removeCartItem(itemId);
+            }
+            return;
+        }
+
+        fetch(`/update-cart/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `quantity=${quantity}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Update the subtotal for this item
+                const row = document.getElementById(`item-${itemId}`);
+                if (row) {
+                    const subtotalCell = row.querySelector('.item-subtotal');
+                    if (subtotalCell) {
+                        subtotalCell.textContent = `$${parseFloat(data.item_subtotal).toFixed(2)}`;
+                    }
+                }
+
+                // Update cart totals
+                updateCartTotals(data);
+
+                // Show success message
+                showMessage(data.message, 'success');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showMessage('Error updating cart', 'danger');
+        });
+    }
+
+    // Function to remove cart item
+    function removeCartItem(itemId) {
+        fetch(`/remove-from-cart/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Remove row from table
+                const row = document.getElementById(`item-${itemId}`);
+                if (row) {
+                    row.remove();
+                }
+
+                // Update cart totals
+                updateCartTotals(data);
+
+                // Show success message
+                showMessage(data.message, 'success');
+
+                // Reload page if cart is empty
+                if (data.cart_items === 0) {
+                    location.reload();
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showMessage('Error removing item', 'danger');
+        });
+    }
+
+    // Function to clear cart
+    function clearCart() {
+        fetch('/clear-cart/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showMessage('Error clearing cart', 'danger');
+        });
+    }
+
+    // Function to update cart totals
+    function updateCartTotals(data) {
+        // Update subtotal and total
+        const subtotalElement = document.getElementById('cart-subtotal');
+        const totalElement = document.getElementById('cart-total');
+
+        if (subtotalElement) {
+            subtotalElement.textContent = `$${parseFloat(data.cart_total).toFixed(2)}`;
+        }
+        if (totalElement) {
+            totalElement.textContent = `$${parseFloat(data.cart_total).toFixed(2)}`;
+        }
+
+        // Update individual item subtotals in cart totals
+        // This requires more complex logic if you want to update each item's subtotal
+    }
+
+    // Function to get CSRF token
+    function getCSRFToken() {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            ?.split('=')[1];
+        return cookieValue || '';
+    }
+
+    // Function to show messages
+    function showMessage(message, type = 'success') {
+        // You can implement this with your preferred notification system
+        // For now, using alert
+        // alert(message);
+
+        // Or create a custom notification div
+        const notification = document.createElement('div');
+        notification.className = `alert alert-${type} position-fixed top-0 start-50 translate-middle-x mt-3`;
+        notification.style.zIndex = '1050';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+});
+</script>
+{% endblock %}
+{% include "footer.html" %}

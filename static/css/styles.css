@@ -5,7 +5,78 @@
 * Created:        04/04/2025
 -------------------------------------------------------------------*/
 
-/* Header CSS */
+/* ========================================
+   COLOR VARIABLES
+   ======================================== */
+
+:root {
+  --primary-color: #10A249;
+  --secondary-color: #000000;
+  --title-color: #2D2D2D;
+  --text-color: #444444;
+  --border-color: #E1FFEC;
+  --bg-color: #E1F9E8;
+  --white: #ffffff;
+  --dark: #010101;
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+body {
+  color: var(--text-color);
+  background: var(--bg-color);
+  font-size: 18px;
+  line-height: 1.8;
+  font-family: 'Arial', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--title-color);
+  font-weight: 700;
+  line-height: 1.3;
+  font-family: 'Arial', sans-serif;
+}
+
+h1 {
+  font-size: 56px;
+}
+
+h2 {
+  font-size: 42px;
+}
+
+h3 {
+  font-size: 36px;
+}
+
+h4 {
+  font-size: 32px;
+}
+
+h5 {
+  font-size: 24px;
+}
+
+h6 {
+  font-size: 20px;
+}
+
+p {
+  font-size: 18px;
+  color: var(--text-color);
+  line-height: 1.8;
+}
+
+small, .small-text {
+  font-size: 14px;
+}
+
+/* ========================================
+   HEADER CSS
+   ======================================== */
+
 .header-top-left ul li:first-child::after{
   content: '';
   height: 100%;
@@ -21,15 +92,13 @@
   height: 34px;
   width: 34px;
   line-height: 33px;
-} 
-
-.header-socials a:hover{
-  background-color: #87C332;
-  color: #fff;
-  border-color: #87C332 !important;
 }
 
-
+.header-socials a:hover{
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color) !important;
+}
 
 .navbar-nav .nav-link{
   padding: 13px 20px;
@@ -45,13 +114,12 @@
   padding: 13px 36px !important;
 }
 
-
 .navbar-nav .nav-link:hover, .navbar-nav .nav-link.show{
-  color: #87C332;
+  color: var(--primary-color);
 }
 
 .dropdown-menu>li>a:hover{
-  background-color: #69A316;
+  background-color: var(--primary-color);
   color: #ffffff;
 }
 
@@ -72,25 +140,24 @@
     visibility: visible;
     transition:all .3s ease-in-out;
   }
-  
+
   .dropdown>.dropdown-toggle:active {
-    /*Without this, clicking will make it sticky*/
     pointer-events: none;
   }
 
   ul.dropdown-menu {
-    max-height: 630px !important; 
+    max-height: 630px !important;
     overflow-y: auto !important;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   .navbar-nav .nav-link.active{
-    color: #87C332;
+    color: var(--primary-color);
   }
 
   .dropdown-item.active{
-    background-color: #69A316;
+    background-color: var(--primary-color);
   }
 }
 
@@ -135,7 +202,7 @@
   }
 
   .slicknav_btn.slicknav_open:before{
-    color: #69A316;
+    color: var(--primary-color);
   }
 
   .slicknav_nav {
@@ -146,10 +213,10 @@
     height: 280px;
     overflow: auto;
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
-  } 
+  }
 
   .slicknav_nav a:hover, li.nav-item.dropdown.slicknav_parent.slicknav_open > a > a {
-    background-color: #69A316 !important;
+    background-color: var(--primary-color) !important;
     color: #fff;
   }
 
@@ -165,13 +232,13 @@
   .dropdown-menu>li>a{
     padding-left: 42px !important;
   }
-  
+
   .dropdown-toggle::after{
     display: none;
   }
 
   .slicknav_nav .active, .fa-angle-up:before{
-    background-color: #69A316;
+    background-color: var(--primary-color);
     color: #fff;
   }
 }
@@ -182,7 +249,10 @@
   }
 }
 
-/* Popup hidden by default */
+/* ========================================
+   SEARCH POPUP
+   ======================================== */
+
 #search1 {
   display: none;
   position: fixed;
@@ -215,9 +285,11 @@ width: 400px;
   cursor: pointer;
 }
 
-/* Banner CSS */
+/* ========================================
+   BANNER CSS
+   ======================================== */
+
 .banner {
-  /* min-height: 800px; */
   background-image: url(../images/ev-vehicle.jpg);
   background-position: center right;
   background-repeat: no-repeat;
@@ -244,7 +316,7 @@ width: 400px;
   .banner{
     margin-top: -21%;
   }
-  
+
   .spin-container{
     margin: 0 100px;
   }
@@ -254,7 +326,10 @@ width: 400px;
   }
 }
 
-/* Spin Animation  */
+/* ========================================
+   SPIN ANIMATION
+   ======================================== */
+
 .spin {
   display: inline-block;
   animation: spin 2s ease-in-out forwards;
@@ -272,8 +347,10 @@ width: 400px;
   }
 }
 
+/* ========================================
+   FEATURE CSS
+   ======================================== */
 
-/* Feature CSS */
 .feature-inner{
   margin-top: -150px;
 }
@@ -304,10 +381,12 @@ width: 400px;
   }
 }
 
+/* ========================================
+   ABOUT CSS
+   ======================================== */
 
-/* About CSS */
 .about {
-  background-image: linear-gradient(90deg, #F5FAEE  20%, #F5FAEE00 100%);
+  background-image: linear-gradient(90deg, var(--bg-color) 20%, #F5FAEE00 100%);
   margin-top: -140px;
 }
 
@@ -330,9 +409,12 @@ width: 400px;
   }
 }
 
-/* Why US CSS */
+/* ========================================
+   WHY US CSS
+   ======================================== */
+
 .why-us .overlay{
-  background-image: linear-gradient(90deg, #F5FAEE 50%, #FFFFFF00 0%);
+  background-image: linear-gradient(90deg, var(--bg-color) 50%, #FFFFFF00 0%);
   opacity: .9;
 }
 
@@ -346,11 +428,9 @@ width: 400px;
   right: 40%;
 }
 
-
 .service-image img{
   margin-bottom: -35px;
 }
-
 
 @media (min-width: 768px ) and (max-width:1200px){
   .service-image img{
@@ -369,7 +449,10 @@ width: 400px;
   };
 }
 
-/* Work CSS */
+/* ========================================
+   WORK CSS
+   ======================================== */
+
 .work-image img{
   width: 150px;
   height: 150px;
@@ -395,10 +478,9 @@ width: 400px;
 }
 
 .work .overlay{
-  background-image: linear-gradient(90deg, #052730 0%, #69A316 100%);
+  background-image: linear-gradient(90deg, #052730 0%, var(--primary-color) 100%);
   opacity: 0.9;
 }
-
 
 @media (min-width: 768px ) and (max-width:1200px){
   .work-box{
@@ -418,7 +500,10 @@ width: 400px;
   }
 }
 
-/* Mission */
+/* ========================================
+   MISSION
+   ======================================== */
+
 @media (max-width: 992px){
   .partner-slider, .mission h2, .partner h3 {
     border: none !important;
@@ -426,7 +511,10 @@ width: 400px;
   }
 }
 
-/* More About CSS */
+/* ========================================
+   MORE ABOUT CSS
+   ======================================== */
+
 .more-about {
   margin: 0 5% ;
   background-color: #052730;
@@ -435,7 +523,6 @@ width: 400px;
   background-repeat: no-repeat;
   background-size: 50% auto;
 }
-
 
 .percentage-wrapper::after{
   position: absolute;
@@ -446,12 +533,12 @@ width: 400px;
   transform: translateX(-50%);
   width: 3px;
   height: 8px;
-  background-color: #87C332;
+  background-color: var(--primary-color);
 }
 
 .percentage-wrapper {
   top: -50px;
-  left: 100%; /* Move it along the width of progress */
+  left: 100%;
   transform: translateX(-50%);
   font-size: 13px;
   transition: left 3s ease-in-out;
@@ -465,13 +552,12 @@ width: 400px;
   transform: translateX(-50%);
   width: 3px;
   height: 8px;
-  background-color: #87C332;
+  background-color: var(--primary-color);
 }
 
 .progress-bar {
   animation: progressBar 3s ease-in-out forwards;
 }
-
 
 .about-video-play {
   height: 50px;
@@ -497,18 +583,17 @@ width: 400px;
   }
 }
 
-
 .waves {
   width: 150px;
   height: 150px;
-  background: #87C33230;
+  background: #10A24930;
   opacity: 0;
   right: -50px;
   bottom: -50px;
   -webkit-animation: waves 3s ease-in-out infinite;
   animation: waves 3s ease-in-out infinite;
 }
-        
+
 .wave-1 {
   -webkit-animation-delay: 0s;
   animation-delay: 0s;
@@ -523,8 +608,6 @@ width: 400px;
   -webkit-animation-delay: 2s;
   animation-delay: 2s;
 }
-
-
 
 @keyframes progressBar {
   0% { width: 0; }
@@ -551,7 +634,10 @@ width: 400px;
   }
 }
 
-/* Review CSS */
+/* ========================================
+   REVIEW CSS
+   ======================================== */
+
 .reviewer-bio img{
   height: 70px;
   width: 70px;
@@ -575,7 +661,10 @@ width: 400px;
   }
 }
 
-/* Moblie App CSS */
+/* ========================================
+   MOBILE APP CSS
+   ======================================== */
+
 .download-btn i{
   font-size: 21px;
 }
@@ -589,7 +678,7 @@ width: 400px;
 }
 
 .mobile-app .overlay {
-  background-image: linear-gradient(90deg, #69A316 0%, #052730 100%);
+  background-image: linear-gradient(90deg, var(--primary-color) 0%, #052730 100%);
   opacity: .9;
 }
 
@@ -603,10 +692,12 @@ width: 400px;
   }
 }
 
+/* ========================================
+   BLOG CSS
+   ======================================== */
 
-/* Blog CSS */
 .blog {
-  background-image: linear-gradient(180deg, #F5FAEE 50%, #F2295B00 100%);
+  background-image: linear-gradient(180deg, var(--bg-color) 50%, #F2295B00 100%);
   margin-top: -50px;
 }
 
@@ -628,7 +719,10 @@ width: 400px;
   transition: all .3s ease-in-out;
 }
 
-/* Footer CSS */
+/* ========================================
+   FOOTER CSS
+   ======================================== */
+
 footer {
   background-image: linear-gradient(180deg, #052730 0%, #1B1A1A 100%);
 }
@@ -642,7 +736,7 @@ footer {
 }
 
 .footer-socials a:hover{
-  background-color: #69A316;
+  background-color: var(--primary-color);
   color: #fff;
   transition: all .3s ease-in-out;
 }
@@ -668,17 +762,17 @@ footer {
   opacity: .15;
 }
 
+/* ========================================
+   ABOUT US PAGE CSS
+   ======================================== */
 
-/* ========================================= */
-/*          About US page CSS                */
-/* ========================================= */
 .team-member-image img{
   height: 130px;
   width: 130px;
 }
 
 .team {
-  background-image: linear-gradient(180deg, #F5FAEE 20%, #F5FAEE00 100%);
+  background-image: linear-gradient(180deg, var(--bg-color) 20%, #F5FAEE00 100%);
 }
 
 .team-socials a{
@@ -689,7 +783,7 @@ footer {
 }
 
 .team-socials a:hover {
-  background-color: #87C332;
+  background-color: var(--primary-color);
   color: #fff;
   transition: all ease-in-out .3s;
 }
@@ -698,19 +792,20 @@ footer {
   .breadcrumb .banner-inner{
     padding-top: 20px !important;
   }
-  
 }
 
-/* ========================================= */
-/*          Our Team page CSS                */
-/* ========================================= */
+/* ========================================
+   OUR TEAM PAGE CSS
+   ======================================== */
+
 .our-team, .team-detail, .price, .project-list, .about1 {
-  background-image: linear-gradient(180deg, #F5FAEE00 40%, #F5FAEE 100%);
+  background-image: linear-gradient(180deg, #F5FAEE00 40%, var(--bg-color) 100%);
 }
 
-/* ========================================= */
-/*           Career page CSS                 */
-/* ========================================= */
+/* ========================================
+   CAREER PAGE CSS
+   ======================================== */
+
 .career-box img, .perk-box img {
   height: 36px;
   width: 36px;
@@ -726,13 +821,13 @@ footer {
 }
 
 .faq .accordion-button, .career-faq .accordion-button{
-  background-color: #F5FAEE;
+  background-color: var(--bg-color);
   color: #676767;
   font-size: 15px;
 }
 
 .faq .accordion-button:not(.collapsed), .career-faq .accordion-button:not(.collapsed){
-  color: #87C332 ;
+  color: var(--primary-color) ;
 }
 
 .career-detail .nav-link:hover{
@@ -750,7 +845,7 @@ footer {
 }
 
 .cv-box{
-  background-image: linear-gradient(180deg, #69A316 0%, #052730  100%);
+  background-image: linear-gradient(180deg, var(--primary-color) 0%, #052730 100%);
 }
 
 .cv-sperator span::before, .cv-sperator span::after {
@@ -772,17 +867,17 @@ footer {
 }
 
 .career-detail-tabs .nav-tabs .nav-link.active{
-  color: #87C332 !important;
+  color: var(--primary-color) !important;
 }
 
-/* ========================================= */
-/*           Gallery page CSS                */
-/* ========================================= */
+/* ========================================
+   GALLERY PAGE CSS
+   ======================================== */
 
 .gallery-container {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6 equal columns to allow for half-width items */
-  gap: 10px; /* Space between images */
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -794,8 +889,8 @@ footer {
 
 .gallery-item img {
   width: 100%;
-  height: 250px !important; 
-  object-fit: cover; 
+  height: 250px !important;
+  object-fit: cover;
   display: block;
 }
 
@@ -812,7 +907,7 @@ footer {
 }
 
 .gallery-item .overlay{
-  background-color: #87C332;
+  background-color: var(--primary-color);
   background-blend-mode: hue;
   mix-blend-mode: hue;
   opacity: 0;
@@ -845,23 +940,25 @@ footer {
 
   .gallery-item.wide,
   .gallery-item.small {
-      grid-column: span 1; 
+      grid-column: span 1;
   }
 }
 
-/* ========================================= */
-/*         Testimonial page CSS              */
-/* ========================================= */
+/* ========================================
+   TESTIMONIAL PAGE CSS
+   ======================================== */
+
 .reviewer-image img, .author-image img, .blog-qoute img{
   height: 100px;
   width: 100px;
 }
 
-/* ========================================= */
-/*               Faq page CSS                */
-/* ========================================= */
+/* ========================================
+   FAQ PAGE CSS
+   ======================================== */
+
 .faq {
-  background-image: linear-gradient(180deg, #F5FAEE00 0%, #F5FAEE 100%);
+  background-image: linear-gradient(180deg, #F5FAEE00 0%, var(--bg-color) 100%);
 }
 
 .faq-qoute{
@@ -872,16 +969,17 @@ footer {
   margin-bottom: -50px;
 }
 
-/* ========================================= */
-/*              Error page CSS               */
-/* ========================================= */
+/* ========================================
+   ERROR PAGE CSS
+   ======================================== */
+
 .error h1{
   font-size: 70px;
-  -webkit-text-stroke: 1px #69A316;
+  -webkit-text-stroke: 1px var(--primary-color);
 }
 
 .error .search-bar a:hover, .search-again .search-bar a:hover {
-  background-color: #87C332;
+  background-color: var(--primary-color);
 }
 
 @media (max-width: 768px){
@@ -890,17 +988,18 @@ footer {
   }
 }
 
+/* ========================================
+   SEARCH RESULT PAGE CSS
+   ======================================== */
 
-/* ========================================= */
-/*          Search Result page CSS           */
-/* ========================================= */
 .search-result{
-  background-image: linear-gradient(180deg, #F5FAEE00 0%, #F5FAEE 100%);
+  background-image: linear-gradient(180deg, #F5FAEE00 0%, var(--bg-color) 100%);
 }
 
-/* ========================================= */
-/*            Contact US page CSS            */
-/* ========================================= */
+/* ========================================
+   CONTACT US PAGE CSS
+   ======================================== */
+
 .contact-icon i, .summary-icon i{
   height: 60px;
   width: 60px;
@@ -915,9 +1014,8 @@ footer {
   line-height: 80px;
 }
 
-
 .contact{
-  background-image: linear-gradient(180deg, #87C33200 50%, #F5FAEE 100%);
+  background-image: linear-gradient(180deg, #10A24900 50%, var(--bg-color) 100%);
 }
 
 .contact .overlay {
@@ -938,9 +1036,9 @@ footer {
   };
 }
 
-/* ========================================= */
-/*              Product page CSS             */
-/* ========================================= */
+/* ========================================
+   PRODUCT PAGE CSS
+   ======================================== */
 
 .range-slider {
   position: relative;
@@ -954,7 +1052,7 @@ footer {
   position: absolute;
   top: 50%;
   height: 4px;
-  background-color: #87C332;
+  background-color: var(--primary-color);
   transform: translateY(-50%);
 }
 
@@ -973,7 +1071,7 @@ footer {
   pointer-events: all;
   width: 20px;
   height: 20px;
-  background-color: #87C332;
+  background-color: var(--primary-color);
   border-radius: 50%;
   cursor: pointer;
   -webkit-appearance: none;
@@ -1039,7 +1137,10 @@ footer {
   color: #052730;
 }
 
-/* Product Review Stars */
+/* ========================================
+   PRODUCT REVIEW STARS
+   ======================================== */
+
 .star-rating-inner {
   transform: rotateY(180deg);
 }
@@ -1071,12 +1172,12 @@ footer {
 }
 
 .star-rating input:hover ~ label .star-stroke,.star-rating input:checked ~ label .star-stroke{
-  background: #6EA343;
+  background: var(--primary-color);
   transition: all .2s ease-in-out;
 }
 
 .star-rating input:checked ~ label .star-stroke .star-fill{
-  background: #6EA343;
+  background: var(--primary-color);
   transition: all .2s ease-in-out;
 }
 
@@ -1089,9 +1190,10 @@ footer {
   width: 100px;
 }
 
-/* ========================================= */
-/*            Comming-Soon page CSS          */
-/* ========================================= */
+/* ========================================
+   COMING SOON PAGE CSS
+   ======================================== */
+
 .coming-soon .overlay {
   background-color: transparent;
   background-image: url(../images/map-evcharge.png);
@@ -1139,13 +1241,13 @@ footer {
   transform: rotate(-45deg);
 }
 
-/* ========================================= */
-/*            Homepage 2 page CSS          */
-/* ========================================= */
+/* ========================================
+   HOMEPAGE 2 CSS
+   ======================================== */
 
 /* Banner Section */
 .banner-1{
-  background-image: linear-gradient(180deg, #052730 100%, #F5FAEE 100%);
+  background-image: linear-gradient(180deg, #052730 100%, var(--bg-color) 100%);
   margin-top: -100px;
 }
 
@@ -1160,20 +1262,19 @@ footer {
   position: absolute;
 }
 
-.banner-1  .text {
+.banner-1 .text {
   letter-spacing: 1.7px;
   text-transform: uppercase;
   fill: #fff;
   font-size: 21px;
 }
 
-.banner-1  #rotatingText {
+.banner-1 #rotatingText {
   animation-name: rotate-circle;
   animation-duration: 20s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-
 
 @keyframes rotate-circle {
   to {
@@ -1210,9 +1311,8 @@ footer {
 }
 
 .banner-1 .slick-dots li.slick-active button::after {
-  background: #69A316 !important;
+  background: var(--primary-color) !important;
 }
-
 
 .banner-1 .overlay{
   background-image: url(../images/map-evcharge.png);
@@ -1226,12 +1326,10 @@ footer {
   margin-bottom: -120px;
 }
 
-
 @media (min-width: 1400px){
   .banner-1 h1{
     font-size: 60px;
   }
-
 }
 
 @media (max-width: 1200px) and (min-width: 992px){
@@ -1270,7 +1368,6 @@ footer {
   margin-bottom: 60px !important;
  }
 
-
  .banner-1{
   padding: 75px 0 0 0!important;
  }
@@ -1297,12 +1394,11 @@ footer {
   .banner-1 .spin-demo-main img{
     left: 40%;
   }
-
-} 
+}
 
 /* About Us Section */
 .index-2 .about-us, .index-2 .pricing, .index-2 .blog{
-    background-image: linear-gradient(180deg, #F5FAEE00 20%, #F5FAEE 100%);
+    background-image: linear-gradient(180deg, #F5FAEE00 20%, var(--bg-color) 100%);
 }
 
 .about-counter-box img{
@@ -1333,7 +1429,7 @@ footer {
 
 /* Service Section */
 .index-2 .service, .project, .contact-mobile{
-  background-image: linear-gradient(180deg, #F5FAEE 60%, #F5FAEE00 100%);
+  background-image: linear-gradient(180deg, var(--bg-color) 60%, #F5FAEE00 100%);
 }
 
 .index-2 .service-box {
@@ -1341,11 +1437,9 @@ footer {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
 }
 
 .index-2 .service-box:hover {
-  /* border-color: #69A316 !important; */
   transition: all .3s ease-in-out;
   background-color: #052730 !important;
 }
@@ -1374,7 +1468,7 @@ footer {
 @media (max-width: 786px) {
   .index-2 .more-about .counter-box {
     border-bottom: 1px solid #F7F7F757 ;
-  }  
+  }
 }
 
 /* How we work CSS*/
@@ -1399,7 +1493,7 @@ footer {
   height: 20px;
   width: 20px;
   z-index: -1;
-  background: #87C332;
+  background: var(--primary-color);
   right: -10px;
   border-bottom: 0;
   border-left: 0;
@@ -1409,7 +1503,6 @@ footer {
 .timeline-row:nth-child(even) .work-info:after{
   left: -10px;
 }
-
 
 @media (max-width: 768px){
   .how-work .section-body::after, .timeline .work-info:after{
@@ -1426,7 +1519,6 @@ footer {
   }
 }
 
-
 /* Project CSS */
 .index-2 .project-info{
   bottom: -40px;
@@ -1439,7 +1531,7 @@ footer {
 }
 
 .index-2 .project h5 a:hover{
-  color: #6EA343;
+  color: var(--primary-color);
 }
 
 .index-2 .project-image:hover img{
@@ -1456,7 +1548,6 @@ footer {
   opacity: .88;
 }
 
-
 /* Testimonial CSS */
 .testimonial-1 {
   margin-right: 5%;
@@ -1465,12 +1556,11 @@ footer {
   background-size: cover;
   background-attachment: fixed;
 }
- 
+
 .testimonial-1 .overlay {
   background-image: linear-gradient(90deg, #052730 40%, #676767CC 100%);
   opacity: .9;
 }
-
 
 .testimonial-1 .slick-dots{
   bottom: 100px;
@@ -1488,7 +1578,6 @@ footer {
   left: 48% !important;
 }
 
-
 @media (max-width: 992px){
   .testimonial-1{
     margin: 0;
@@ -1498,7 +1587,7 @@ footer {
   .testimonial-1 .section-right-inner{
     margin-top: 50px !important;
   }
-  
+
   .about-video{
     display: none;
   }
@@ -1529,9 +1618,315 @@ footer {
     bottom: 20px;
   }
 }
+
 .thumbnail img {
   transition: opacity 0.2s;
 }
+
 .thumbnail img:hover {
   opacity: 0.7;
+}
+
+/* ========================================
+   COLOR SWATCHES - SELECTABLE CIRCLES
+   ======================================== */
+
+.product-colors {
+  position: relative;
+  padding: 10px 0;
+}
+
+.product-colors .color-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--title-color);
+  margin-bottom: 12px;
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.swatches-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 0;
+}
+
+.color-swatch-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2.5px solid #e0e0e0;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.color-swatch-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--secondary-color);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.color-swatch-btn.selected {
+  border-color: var(--primary-color);
+  transform: scale(1.08);
+  box-shadow: 0 0 0 3px rgba(16, 162, 73, 0.25), 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.color-swatch-btn .swatch-check {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0;
+}
+
+.color-swatch-btn.selected .swatch-check {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.color-swatch-btn .swatch-check svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
+  stroke: var(--secondary-color);
+}
+
+.color-swatch-btn[data-dark="true"] .swatch-check {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.color-swatch-btn[data-dark="true"] .swatch-check svg {
+  stroke: #ffffff;
+}
+
+.color-swatch-btn::before {
+  content: attr(data-color);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background: var(--secondary-color);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.color-swatch-btn:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.selected-color-text {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #999;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  padding: 4px 0;
+}
+
+.selected-color-text.active {
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.selected-color-text .color-name {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .color-swatch-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .color-swatch-btn .swatch-check {
+    width: 16px;
+    height: 16px;
+  }
+
+  .color-swatch-btn .swatch-check svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .product-colors .color-label {
+    font-size: 13px;
+  }
+
+  .color-swatch-btn::before {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .color-swatch-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .color-swatch-btn .swatch-check {
+    width: 14px;
+    height: 14px;
+  }
+
+  .color-swatch-btn .swatch-check svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .swatches-wrapper {
+    gap: 8px;
+  }
+}
+
+/* ========================================
+   COLOR CLASSES
+   ======================================== */
+
+.primary {
+  color: var(--primary-color) !important;
+}
+
+.primary-bg {
+  background-color: var(--primary-color) !important;
+}
+
+.primary-border {
+  border-color: var(--primary-color) !important;
+}
+
+.primary-hover:hover {
+  color: var(--primary-color) !important;
+}
+
+.primary-bg-hover:hover {
+  background-color: var(--primary-color) !important;
+}
+
+.primary-border-hover:hover {
+  border-color: var(--primary-color) !important;
+}
+
+.secondary {
+  color: var(--secondary-color) !important;
+}
+
+.secondary-bg {
+  background-color: var(--secondary-color) !important;
+}
+
+.secondary-border {
+  border-color: var(--secondary-color) !important;
+}
+
+.title-color {
+  color: var(--title-color) !important;
+}
+
+.text-color {
+  color: var(--text-color) !important;
+}
+
+.border-color {
+  border-color: var(--border-color) !important;
+}
+
+.bg-color {
+  background-color: var(--bg-color) !important;
+}
+
+/* ========================================
+   OLD GREEN CLASS (Backward Compatibility)
+   ======================================== */
+
+.green {
+  color: var(--primary-color) !important;
+}
+
+.green-bg {
+  background-color: var(--primary-color) !important;
+}
+
+.green-border {
+  border-color: var(--primary-color) !important;
+}
+
+.green-hover:hover {
+  color: var(--primary-color) !important;
+}
+
+.green-bg-hover:hover {
+  background-color: var(--primary-color) !important;
+}
+
+.green-border-hover:hover {
+  border-color: var(--primary-color) !important;
+}
+
+/* ========================================
+   RESPONSIVE FONT SIZES (Desktop First)
+   ======================================== */
+
+/* Heading sizes are set in BASE STYLES section above */
+
+@media (max-width: 992px) {
+  h1 { font-size: 40px; }
+  h2 { font-size: 34px; }
+  h3 { font-size: 28px; }
+  h4 { font-size: 24px; }
+  h5 { font-size: 20px; }
+  h6 { font-size: 18px; }
+  p { font-size: 16px; }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 32px; }
+  h2 { font-size: 28px; }
+  h3 { font-size: 24px; }
+  h4 { font-size: 20px; }
+  h5 { font-size: 18px; }
+  h6 { font-size: 16px; }
+  p { font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 26px; }
+  h2 { font-size: 22px; }
+  h3 { font-size: 20px; }
+  h4 { font-size: 18px; }
+  h5 { font-size: 16px; }
+  h6 { font-size: 15px; }
+  p { font-size: 14px; }
 }

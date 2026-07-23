@@ -81,21 +81,32 @@
 </div>
 
               {# Colors swatches - show below add-to-cart and allow selection #}
-              {% if product.color_list %}
-                <div class="product-colors mb-4" data-product-id="{{ product.id }}">
-                  <h6 class="mb-2">Choose color</h6>
-                  <div class="d-flex flex-wrap align-items-center gap-2">
-                    <input type="hidden" id="selectedColor" name="color" value="">
-                    {% for color in product.color_list %}
-                      <button type="button" class="color-swatch btn p-0 border" data-color="{{ color }}" title="{{ color }}" style="display:inline-flex;align-items:center;gap:8px;padding:6px;border-radius:6px;">
-                        <span class="swatch-circle rounded-circle" style="display:inline-block;width:22px;height:22px;background-color:{{ color|default:'#ddd' }};border:1px solid #ccc;"></span>
-                        <small class="text-muted d-none d-md-inline">{{ color }}</small>
-                      </button>
-                    {% endfor %}
-                  </div>
-                </div>
-              {% endif %}
+{% if product.color_list %}
+  <div class="product-colors mb-4" data-product-id="{{ product.id }}">
+    <h6 class="mb-2 color-label">Choose Color</h6>
+    <div class="d-flex flex-wrap align-items-center gap-2 swatches-wrapper" id="colorSwatchesWrapper">
+      <input type="hidden" id="selectedColor" name="color" value="">
 
+      {% for color in product.color_list %}
+        <button
+          type="button"
+          class="color-swatch-btn"
+          data-color="{{ color }}"
+          title="{{ color }}"
+          aria-label="Select {{ color }} color"
+          style="background-color: {{ color }};"
+        >
+          <span class="swatch-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </span>
+        </button>
+      {% endfor %}
+    </div>
+    <span class="selected-color-text" id="selectedColorText">No color selected</span>
+  </div>
+{% endif %}
               <div class="product-info border-dashed border-top-0 border-start-0 border-end-0 border-2 mb-4 pb-4">
                 <h4 class="mb-2">Product Info</h4>
                 <ul class="list-unstyled mb-3">

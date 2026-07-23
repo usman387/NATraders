@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 from pathlib import Path
-from unittest.mock import DEFAULT
-
-from django.conf.global_settings import STATICFILES_DIRS, DEFAULT_AUTO_FIELD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,12 +25,13 @@ SECRET_KEY = 'django-insecure-#^isz)u@-$bt4wqu)g2%2*c5$hw21tmj&u$!%-h4kh_@7&((ej
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['eveebike.pythonanywhere.com']
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['*']
-# Application definition
+# ALLOWED_HOSTS - For production, restrict this
+ALLOWED_HOSTS = ['*']  # For development only
+# For production, use: ALLOWED_HOSTS = ['eveebike.pythonanywhere.com', 'yourdomain.com']
 
+# Application definition
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website',
-    'cart',
-
 ]
 
 MIDDLEWARE = [
@@ -64,9 +60,11 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',  # Add this for development
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # Add this for media files
             ],
         },
     },
@@ -117,28 +115,80 @@ USE_I18N = True
 USE_TZ = True
 
 
-
 # Static files (CSS, JavaScript, Images)
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATIC_URL = 'static/'
+
+STATIC_URL = '/static/'  # Added leading slash
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # ADD THIS - Required for collectstatic
 STATICFILES_DIRS = [
-    BASE_DIR,"static"
+    BASE_DIR / "static",
 ]
 
-# Email settings
+# Media files (User uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# =============== EMAIL SETTINGS ===============
+# IMPORTANT: Never commit real passwords to version control!
+# Use environment variables for production
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'riazusman476@gmail.com'  # or your email provider
+EMAIL_HOST = 'smtp.gmail.com'  # FIXED: Should be smtp.gmail.com, not your email
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'riazusman476@gmail.com'
-EMAIL_HOST_PASSWORD = 'USman2213@!'
+EMAIL_HOST_PASSWORD = 'USman2213@!'  # ⚠️ Never hardcode passwords! Use environment variables
 DEFAULT_FROM_EMAIL = 'riazusman476@gmail.com'
 ADMIN_EMAIL = 'admin@yourdomain.com'
 
-# Site settings
+# For development, use console backend to avoid sending real emails:
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# =============== SITE SETTINGS ===============
 SITE_NAME = 'EveeBike'
-SITE_URL = 'https://eveebike.com'
+SITE_URL = 'https://eveebike.com'  # Update with your actual domain
+
+
+# =============== JAZZMIN SETTINGS ===============
+JAZZMIN_SETTINGS = {
+    "site_title": "EV Bikes Admin",
+    "site_header": "EV Bikes",
+    "site_brand": "EV Bikes Admin",
+    "welcome_sign": "Welcome to EV Bikes Admin Panel",
+    "copyright": "EV Bikes",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "search_model": ["auth.User", "website.Product"],
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "website.Banner": "fas fa-image",
+        "website.Product": "fas fa-box",
+        "website.Cart": "fas fa-shopping-cart",
+        "website.CartItem": "fas fa-shopping-basket",
+        "website.Order": "fas fa-shopping-bag",
+        "website.OrderItem": "fas fa-boxes",
+        "website.Testimonial": "fas fa-star",
+        "website.Service": "fas fa-cog",
+        "website.Project": "fas fa-project-diagram",
+        "website.BlogPost": "fas fa-blog",
+        "website.SiteSetting": "fas fa-cogs",
+    },
+    "order_with_respect_to": [
+        "website",
+        "auth",
+    ],
+}
+
+# For Django 3.2+ (required)
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']

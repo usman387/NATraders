@@ -1,16 +1,31 @@
 from django.contrib import admin
 from django import forms
 from .models import (
-    Banner, Product, ProductImage, ProductFAQ, Service, Project,
+    Banner, BannerFeature,Product, ProductImage, ProductFAQ, Service, Project,
     Testimonial, BlogPost, SiteSetting, Cart, CartItem, Order, OrderItem
 )
+# ==================== BANNER FEATURES INLINE ====================
+class BannerFeatureInline(admin.TabularInline):
+    model = BannerFeature
+    extra = 2
+    fields = ('title', 'subtitle', 'icon', 'order', 'is_active')
+    classes = ('collapse',)
+    verbose_name = "Feature"
+    verbose_name_plural = "Features"
 
+@admin.register(BannerFeature)
+class BannerFeatureAdmin(admin.ModelAdmin):
+    list_display = ('title', 'subtitle', 'banner', 'order', 'is_active')
+    list_filter = ('banner', 'is_active')
+    search_fields = ('title', 'subtitle')
+    list_editable = ('order', 'is_active')
 # ==================== BANNER ====================
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
     list_display = ('title', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)
+    inlines = [BannerFeatureInline]
 
 
 # ==================== PRODUCT ====================

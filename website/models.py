@@ -24,7 +24,26 @@ class Banner(models.Model):
     class Meta:
         ordering = ['order']
 
+# ==================== BANNER FEATURES ====================
+class BannerFeature(models.Model):
+    """Features displayed on banner"""
+    banner = models.ForeignKey(Banner, related_name='features', on_delete=models.CASCADE)
+    title = models.CharField(max_length=50, help_text="e.g., '16 Hrs' or 'CO2'")
+    subtitle = models.CharField(max_length=50, help_text="e.g., 'Non Stop' or 'Carbon Free'")
+    icon = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        help_text="Font Awesome icon class (e.g., 'fa-microchip', 'fa-leaf')"
+    )
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return f"{self.title} - {self.subtitle}"
+
+    class Meta:
+        ordering = ['order']
 # ==================== PRODUCT ====================
 class Product(models.Model):
     TAB_CHOICES = [
